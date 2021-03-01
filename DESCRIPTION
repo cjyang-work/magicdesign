@@ -1,0 +1,56 @@
+Package: magicdesign
+Title: Multiparental Advanced Generation InterCross (MAGIC) population design and test.
+Version: 1.1.2
+Authors@R:
+    c(person(given = "CJ",
+             family = "Yang",
+             role = c("aut", "cre"),
+             email = "cyang@sruc.ac.uk",
+             comment = c(Institution = "Scotland's Rural College")),
+      person(given = "Rodney",
+             family = "Edmondson",
+             role = c("aut"),
+             email = "rodney.edmondson@gmail.com"),
+      person(given = "Hans-Peter",
+             family = "Piepho",
+             role = c("aut"),
+             email = "piepho@uni-hohenheim.de",
+             comment = c(Institution = "University of Hohenheim")),
+      person(given = "Wayne",
+             family = "Powell",
+             role = c("aut"),
+             email = "wpowell@sruc.ac.uk",
+             comment = c(Institution = "Scotland's Rural College")),
+      person(given = "Ian",
+             family = "Mackay",
+             role = c("aut", "ctb"),
+             email = "ian.mackay@sruc.ac.uk",
+             comment = c(Institution = "Scotland's Rural College")))
+Author:
+    CJ Yang [aut, cre]
+    Rodney Edmondson [aut]
+    Hans-Peter Piepho [aut]
+    Wayne Powell [aut]
+    Ian Mackay [aut, ctb]
+Maintainer:
+    CJ Yang <cyang@sruc.ac.uk>
+URL: https://github.com/cjyang-sruc/magicdesign
+Description: Design and test one or more Multiparental Advanced Generation InterCross (MAGIC) populations via simulation.
+Depends:
+    R (>= 3.3.0)
+Imports:
+    gtools,
+    stringr,
+    blocksdesign,
+    AlphaSimR,
+    ggplot2,
+    reshape2,
+    plotly,
+    htmlwidgets
+Suggests:
+    qtl2
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
