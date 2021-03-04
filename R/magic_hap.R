@@ -1,6 +1,6 @@
 #' Extract the founder genotypes.
 #'
-#' This function takes haplotypes from simulation and convert them into
+#' This function takes haplotypes from simulation and converts them into
 #' founder genotypes.
 #'
 #' @param hap a matrix of haplotypes in the RILs.

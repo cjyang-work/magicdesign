@@ -1,14 +1,13 @@
-#' Plot pedigrees generated from magic.eval().
+#' Plot pedigree.
 #'
-#' This function takes a pedigree and display it in an interactive plot. This function
+#' This function takes a pedigree and displays it in an interactive plot. This function
 #' only works for number of founders that are power of 2.
 #'
-#' @param ped a pedigree generated from magic.eval().
+#' @param ped a pedigree.
 #' @param filename a string of filename to save the pedigree plot file.
 #' @param basic a logical indicator of whether it is a basic design or not.
 #' @param show.partial a logical indicator of whether to plot a partial pedigree or not.
-#' @param w2h.ratio a numerical value of width-to-height-ratio in the pedigree plot
-#'        (default is 2).
+#' @param w2h.ratio a numerical value of width-to-height-ratio in the pedigree plot.
 #' @return a HTML file of an interactive pedigree plot.
 #'
 #' @noRd

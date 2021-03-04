@@ -2,19 +2,19 @@
 % Please edit documentation in R/magic_summary.R
 \name{magic.summary}
 \alias{magic.summary}
-\title{Summarize the comparisons of different MAGIC designs in tables.}
+\title{Tabulate the comparisons of different MAGIC designs.}
 \usage{
 magic.summary(input)
 }
 \arguments{
-\item{input}{a list of outputs from magic.eval().}
+\item{input}{a list of outputs from \link{magic.eval}.}
 }
 \value{
 a list of 6 different comparisons.
 }
 \description{
-This function takes a list of outputs from magic.eval() and compares the MAGIC designs.
-The same results from magic.plot() are shown in tables instead of figures.
+This function takes a list of outputs from \link{magic.eval} and compares the MAGIC designs.
+It is similar to \link{magic.plot}, excepts the results are shown in tables instead of figures.
 }
 \examples{
 \donttest{

@@ -7,20 +7,20 @@
 magic.full(n, inbred = T)
 }
 \arguments{
-\item{n}{number of founders.}
+\item{n}{number of founders (4, 8).}
 
-\item{inbred}{logical indicator of whether the founders are inbred (default to TRUE).}
+\item{inbred}{logical indicator of whether the founders are inbred.}
 }
 \value{
-an object of "cross.info" class, which is a list of
+an object of "cross.info" class, \emph{i.e.} a list of
 founder combinations (fcomb) and crossing plans (xplan).
 }
 \description{
 This function produces all possible founder combinations and crosses for
 only either 4 or 8 founders. In a full design, the number of unique
-founder combinations (funnels) is given by n!/(2^(n-1)). Full design for
-16 or more founders are impossible in practice, as 16 founders would
-result in 638,512,875 funnels.
+founder combinations (funnels) is given by \eqn{n!/2^{n-1}}. Full design for
+16 or more founders are impossible in practice, for example, a full design
+for 16 founders would have 638,512,875 funnels.
 }
 \examples{
 \donttest{

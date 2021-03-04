@@ -1,13 +1,18 @@
 #' Create a deficient MAGIC design.
 #'
-#' This function produces m (or m-set) founder combinations and crosses for
+#' This function produces `m` (or `m`-set) founder combinations and crosses for
 #' number of founders that is not a power of 2 (e.g. 3,5,6,7,9,...).
+#' For `balanced=T`, `n` is restricted to 3, 5-7, 9-15. For `balanced=F`,
+#' `n` is limited to 3, 5-7, 9-15, 17-31, 33-63, 65-127.
+#' Please refer to the section on deficient MAGIC design in the
+#' [vignette](https://github.com/cjyang-sruc/magicdesign/magicdesign_vignette.pdf)
+#' for more information on the accepted `m` values for each `n`.
 #'
 #' @param n number of founders.
-#' @param m number of funnel sets (balanced=T) or funnels (balanced=F).
+#' @param m number of funnel sets (`balanced=T`) or funnels (`balanced=F`).
 #' @param balanced logical indicator of whether balanced partial design is chosen or ignored.
-#' @param inbred logical indicator of whether the founders are inbred (default to TRUE).
-#' @return an object of "cross.info" class, which is a list of
+#' @param inbred logical indicator of whether the founders are inbred.
+#' @return an object of "cross.info" class, *i.e.* a list of
 #'         founder combinations (fcomb) and crossing plans (xplan).
 #'
 #' @examples
@@ -17,10 +22,31 @@
 #'
 #' @export
 
-magic.deficient <- function(n, m, balanced, inbred=T){
+magic.deficient <- function(n, m, balanced=F, inbred=T){
   
   # check to make sure that n is larger than 2 and not a power of 2.
-  if(n < 3 | log(n,2)%%1==0) stop("n has to be larger than 2 and not a power of 2.")
+  if(n < 3 | log(n,2)%%1==0 | n > 128) stop("n has to be between 3 to 127 and not a power of 2.")
+
+  # argument check: m.
+  if(!(m%%1==0)) stop("m has to be an integer.")
+  
+  # argument check: ranges of m.
+  m.check <- cbind(c(3, 5:7, 9:15, 17:31, 33:63, 65:127),
+                   c(1, rep(1,3), rep(1,7), rep(1,15), rep(1,31), rep(1,63)),
+                   c(1, 48, 285, 135, rep(100, 116)),
+                   c(1, 240, 855, 945, rep(10000, 116)))
+  if(balanced & (m < m.check[m.check[,1]==n, 2] | m > m.check[m.check[,1]==n, 3])){
+    stop("invalid m for the selected n.")
+  } else if(!balanced & (m < m.check[m.check[,1]==n, 2] | m > m.check[m.check[,1]==n, 4])){
+    stop("invalid m for the selected n.")
+  }
+  
+  # argument check: balanced.
+  if(!is.logical(balanced)) stop("argument \"balanced\" has to be either TRUE (T) or FALSE (F).")
+  
+  # argument check: inbred.
+  if(!is.logical(inbred)) stop("argument \"inbred\" has to be either TRUE (T) or FALSE (F).")
+
 
   # find the number of founders needed in first cross (e.g. n=5 means 8 founders, n=13 means 16 founders).
   n0 <- 2^ceiling(log(n,2))
@@ -61,21 +87,29 @@ magic.deficient <- function(n, m, balanced, inbred=T){
     
     if(balanced){
       
-      # get the number of founder occurrence (nfo) and number of funnel (nf) for use in blocksdesign.
-      nf <- 1
-      while(!((nf*n0/n)%%1 == 0)){
-        nf <- nf + 1
-      }
-      nfo <- nf*n0/n
+      if(n < 16){
+        # get the number of founder occurrence (nfo) and number of funnel (nf) for use in blocksdesign.
+        nf <- 1
+        while(!((nf*n0/n)%%1 == 0)){
+          nf <- nf + 1
+        }
+        nfo <- nf*n0/n
 
-      # find semi-balanced partial design using the blocksdesign package.
-      # it won't be fully balanced - we can maintain equal representation of founders in the final RILs,
-      # but unlikely to get equal representation of founder crosses.
-      # at best, the founder crosses will be approximately balanced as m increases.
-      .fmat <- blocksdesign::blocks(treatments=n, replicates=nfo*m, blocks=c(list(nf*m),replicate(nx-1,list(2))))$Plan
-      .fmat <- t(matrix(as.numeric(t(as.matrix(.fmat[,(ncol(.fmat)-1):ncol(.fmat)]))), nrow=n0))
-      fmat <- magic.rearrange(fmat=.fmat)
-      
+        # warns user that large m may take a while, sometimes not possible to complete.
+        if(m > 10) message("m > 10; this may take a while and sometimes not possible to complete; please reconsider m.")
+
+        # find semi-balanced partial design using the blocksdesign package.
+        # it won't be fully balanced - we can maintain equal representation of founders in the final RILs,
+        # but unlikely to get equal representation of founder crosses.
+        # at best, the founder crosses will be approximately balanced as m increases.
+        .fmat <- blocksdesign::blocks(treatments=n, replicates=nfo*m, blocks=c(list(nf*m),replicate(nx-1,list(2))))$Plan
+        .fmat <- t(matrix(as.numeric(t(as.matrix(.fmat[,(ncol(.fmat)-1):ncol(.fmat)]))), nrow=n0))
+        fmat <- magic.rearrange(fmat=.fmat)
+
+      } else {
+        stop("Balanced partial design is not available for n > 16.")
+      }
+
     } else {
       
       # for unbalanced partial design, we randomly sample the combinations.

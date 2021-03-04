@@ -13,7 +13,7 @@ magic.balanced(fmat, verbose = F)
 }
 \value{
 a logical indicator of whether the MAGIC design is balanced or not, and
-also a table of all founder pairings if verbose=T.
+also a table of all founder pairings if \code{verbose=T}.
 }
 \description{
 This function takes a matrix of founder combinations and determines if the design

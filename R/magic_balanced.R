@@ -6,7 +6,7 @@
 #' @param fmat a matrix of founder combinations.
 #' @param verbose a logical indicator of whether verbose output is desired.
 #' @return a logical indicator of whether the MAGIC design is balanced or not, and
-#'         also a table of all founder pairings if verbose=T.
+#'         also a table of all founder pairings if `verbose=T`.
 #'
 #' @examples
 #' \donttest{

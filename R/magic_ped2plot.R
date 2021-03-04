@@ -1,15 +1,19 @@
-#' Plot pedigree generated from magic.eval().
+#' Plot pedigree.
 #'
 #' This function plots the pedigree based on the type of design.
+#' By default, the function will plot a comprehensive pedigree for
+#' `n` of 4, 8, 16, 32, 64, 128 and a simple pedigree for other `n`.
+#' The pedigree is generated from either [magic.ped] or [magic.eval].
+#' Note: if the MAGIC design is created from a user-provided pedigree,
+#' then the function will always plot a simple pedigree.
 #'
-#' @param ped a pedigree generated from magic.eval().
+#' @param ped a pedigree.
 #' @param filename a string of filename to save the pedigree plot file.
 #' @param basic a logical indicator of whether it is a basic design or not.
 #' @param show.partial a logical indicator of whether to plot a partial pedigree or not.
-#' @param w2h.ratio a numerical value of width-to-height-ratio in the pedigree plot
-#'        (default is 2).
+#' @param w2h.ratio a numerical value of width-to-height-ratio in the pedigree plot.
 #' @param force.option a logical indicator of whether to force the function to plot
-#'        using a simpler option (default is FALSE).
+#'        using a simpler option.
 #' @return a HTML file of an interactive pedigree plot.
 #'
 #' @examples

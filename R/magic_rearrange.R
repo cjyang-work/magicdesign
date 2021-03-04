@@ -4,7 +4,7 @@
 #' founder appears before larger founder in any cross (e.g. 3124 becomes 1324).
 #'
 #' @param fmat matrix of founder combinations.
-#' @return an object of rearranged matrix of founder combinations.
+#' @return a rearranged matrix of founder combinations.
 #'
 #' @examples
 #' \donttest{
@@ -21,7 +21,7 @@ magic.rearrange <- function(fmat){
   nx <- log(n, 2)
   
   # check if n is a power of 2.
-  if(!(nx%%1==0)) stop("n has to be a power of 2. e.g. 2, 4, 8.")
+  if(!(nx%%1==0)) stop("number of fmat columns has to be a power of 2. e.g. 4, 8, 16.")
 
   # rearrange fmat.
   fmat <- c(t(fmat))

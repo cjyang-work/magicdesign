@@ -2,7 +2,7 @@
 % Please edit documentation in R/magic_addx.R
 \name{magic.addx}
 \alias{magic.addx}
-\title{Include additional crossing generations.}
+\title{Add an extra crossing generation.}
 \usage{
 magic.addx(xinfo, addx, repx, selfx)
 }
@@ -16,18 +16,19 @@ magic.addx(xinfo, addx, repx, selfx)
 \item{selfx}{an integer of number of selfing generations after the additional crosses.}
 }
 \value{
-an object of "cross.info" class, which is a list of
+an object of "cross.info" class, \emph{i.e.} a list of
 founder combinations (fcomb) and crossing plans (xplan).
 }
 \description{
-This function takes the "cross.info" object and include an additional crossing
+This function takes the "cross.info" object and adds an extra crossing
 generation after the final n-way crosses have been made.
 }
 \details{
-There are two options available: addx=1 splits the n-way individuals into two equal pools
-and make all possible crosses between these two pools; addx=2 keeps the n-way individuals
+There are two options available: \code{addx=1} splits the n-way individuals into two equal pools
+and make all possible crosses between these two pools similar to the approach of
+\href{https://doi.org/10.3389/fpls.2018.01825}{Stadlmeier et al 2018}; \code{addx=2} keeps the n-way individuals
 in one pool and make all possible crosses within this one pool (random mating). Note
-that addx=1 is only available for basic design, and while addx=2 is not restricted
+that \code{addx=1} is only available for \strong{basic design}. While \code{addx=2} is not restricted
 to just basic design, it is still not recommended for other designs.
 }
 \examples{

@@ -7,16 +7,16 @@
 magic.basic(n)
 }
 \arguments{
-\item{n}{number of founders.}
+\item{n}{number of founders (4, 8, 16, 32, 64, 128).}
 }
 \value{
-an object of "cross.info" class, which is a list of
+an object of "cross.info" class, \emph{i.e.} a list of
 founder combinations (fcomb) and crossing plans (xplan).
 }
 \description{
 This function produces a single funnel of founder combinations and crosses for
-4 or more founders. Since there only one funnel, there is no need for
-specifying if the founders are inbred or not.
+4 or more founders. Since there is only one funnel involved, the basic design
+works the same regardless of whether the founders are inbred or not.
 }
 \examples{
 \donttest{

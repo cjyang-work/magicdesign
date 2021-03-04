@@ -1,11 +1,11 @@
 #' Create a basic MAGIC design.
 #'
 #' This function produces a single funnel of founder combinations and crosses for
-#' 4 or more founders. Since there only one funnel, there is no need for
-#' specifying if the founders are inbred or not.
+#' 4 or more founders. Since there is only one funnel involved, the basic design
+#' works the same regardless of whether the founders are inbred or not.
 #'
-#' @param n number of founders.
-#' @return an object of "cross.info" class, which is a list of
+#' @param n number of founders (4, 8, 16, 32, 64, 128).
+#' @return an object of "cross.info" class, *i.e.* a list of
 #'         founder combinations (fcomb) and crossing plans (xplan).
 #'
 #' @examples

@@ -1,14 +1,15 @@
 #' Plot and compare different MAGIC designs.
 #'
-#' This function takes a list of outputs from magic.eval() and compares the MAGIC designs
-#' via various plots. There are two plot display option available: "interval" highlights
-#' the recombinations within the previously specified hap.int argument, while "whole"
+#' This function takes a list of outputs from [magic.eval] and compares the MAGIC designs
+#' via various plots. There are two plot display options available: `"interval"` highlights
+#' the recombinations within the previously specified `hap.int` argument, while `"whole"`
 #' shows the distribution of founder genomes in the RILs.
 #'
-#' @param input a list of outputs from magic.eval().
-#' @param display a character indicator of whether "interval" or "whole" plot display is desired.
-#' @param fpair a matrix of two columns of founder pairs (ignored if display="whole").
+#' @param input a list of one or more outputs from [magic.eval].
+#' @param display a character indicator of whether `"interval"` or `"whole"` plot display is desired.
+#' @param fpair a matrix of two columns of founder pairs (ignored if `display="whole"`).
 #' @param chr.names a vector of chromosome names (optional).
+#' @param annotate a logical indicator of whether to annotate subplot C if `display="whole"`.
 #' @return multi-section plots.
 #'
 #' @seealso [magic.summary]
@@ -25,7 +26,8 @@
 magic.plot <- function(input,
                        display=c("interval", "whole"),
                        fpair=NULL,
-                       chr.names=NULL){
+                       chr.names=NULL,
+                       annotate=T){
   
   # get some information from the input
   n.design <- length(input)
@@ -79,25 +81,31 @@ magic.plot <- function(input,
     if(is.null(fpair)) fpair <- cbind(1, 2:n)
     fpair <- paste(fpair[,1], fpair[,2], sep="_")
 
-    dat3 <- lapply(1:n.design, FUN=function(x) data.frame(design=x, sim=1:n.sim, t(input[[x]][[2]][fpair, , drop=F]), stringsAsFactors=F))
-    dat3 <- do.call(rbind, dat3)
-    dat3 <- reshape2::melt(dat3, id.vars=c("sim", "design"))
+    dat3 <- vector()
+    for(i in 1:n.design){
+      temp <- t(input[[i]][[2]][fpair, , drop=F])
+      temp <- t(sapply(1:ncol(temp), FUN=function(x) summary(temp[,x])))[, c(1,4,6)]
+      dat3 <- rbind(dat3, data.frame(design=i, rhap=fpair, temp))
+    }
+
     dat3$design <- as.factor(dat3$design)
     dat3$design <- factor(dat3$design, labels=paste("design", 1:n.design, sep=" "))
     dat3$design <- factor(dat3$design, levels=rev(levels(dat3$design)))
-    levels(dat3$variable) <- gsub("X", "", levels(dat3$variable))
+    dat3$rhap <- as.factor(dat3$rhap)
+    levels(dat3$rhap) <- fpair
 
     hues <- seq(15, 375, length=n.design+1)
     hues <- hcl(h=hues, l=65, c=100)[1:n.design]
     
     plot3 <- ggplot2::ggplot() +
-      ggplot2::geom_boxplot(data=dat3, ggplot2::aes(x=variable, y=value, fill=design), alpha=0.5, lwd=0.2,  outlier.alpha=0.3, outlier.size=1) +
+      ggplot2::geom_linerange(data=dat3, ggplot2::aes(x=rhap, ymin=Min., ymax=Max., group=design), color="#AAAAAA", position=ggplot2::position_dodge(width=0.8)) +
+      ggplot2::geom_point(data=dat3, ggplot2::aes(x=rhap, y=Mean, color=design), position=ggplot2::position_dodge(width=0.8), alpha=0.5) +
       ggplot2::theme(panel.background=ggplot2::element_blank(), panel.grid=ggplot2::element_blank()) +
       ggplot2::annotate("rect", xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf, fill=NA, color="#DDDDDD") +
       ggplot2::xlab("recombinant haplotypes") +
       ggplot2::ylab("proportion") +
       ggplot2::scale_x_discrete(limits=rev(levels(dat3$variable))) +
-      ggplot2::scale_fill_manual(values=rev(hues)) +
+      ggplot2::scale_color_manual(values=rev(hues)) +
       ggplot2::coord_flip() +
       ggplot2::labs(tag="C")
     
@@ -194,6 +202,27 @@ magic.plot <- function(input,
       }
     }
     
+    if(annotate){
+      dat6.anno <- vector()
+      for(i in 1:n.design){
+        for(j in 1:n.chr){
+          temp <- dat6[dat6$design==i & dat6$chr==j,]
+          dat6.loess <- loess(seg.mean~seg.len, data=temp)
+          dat6.anno <- rbind(dat6.anno, data.frame(x=1,
+                                                   y=predict(dat6.loess, 1),
+                                                   design=i,
+                                                   chr=j))
+        }
+      }
+      dat6.anno$design <- as.factor(dat6.anno$design)
+      dat6.anno$chr <- as.factor(dat6.anno$chr)
+      if(is.null(chr.names)){
+        levels(dat6.anno$chr) <- paste("chr", levels(dat6.anno$chr), sep=" ")
+      } else {
+        levels(dat6.anno$chr) <- paste("chr", chr.names, sep=" ")
+      }
+    }
+
     dat6$design <- as.factor(dat6$design)
     dat6$chr <- as.factor(dat6$chr) 
     if(is.null(chr.names)){
@@ -214,11 +243,16 @@ magic.plot <- function(input,
       ggplot2::ylab("mean count") +
       ggplot2::theme(legend.position="none") +
       ggplot2::labs(tag="C")
+      
+    if(annotate){
+      plot6 <- plot6 +
+        ggrepel::geom_text_repel(data=dat6.anno, ggplot2::aes(x=x, y=y, label=design), min.segment.length=0, box.padding=0.5)
+    }
     
     # combine plot4-6.
     suppressMessages(gridExtra::grid.arrange(plot4, plot5, plot6, heights=c(1, ceiling((n.chr+1)/3), ceiling(n.chr/3))))
   }
   
-  message("Note: the plot can be exported using the ggsave function in ggplot2, for example, ggplot2::ggsave(filename=\"plot.png\", width=7, height=7, units=\"in\", dpi=600)")
+  message("Note: the plot can be exported using the ggsave function in ggplot2.\nFor example,\nggplot2::ggsave(filename=\"plot.png\", width=7, height=7, units=\"in\", dpi=600)")
 
 }

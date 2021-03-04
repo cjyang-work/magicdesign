@@ -2,13 +2,13 @@
 #'
 #' This function produces all possible founder combinations and crosses for
 #' only either 4 or 8 founders. In a full design, the number of unique
-#' founder combinations (funnels) is given by n!/(2^(n-1)). Full design for
-#' 16 or more founders are impossible in practice, as 16 founders would
-#' result in 638,512,875 funnels.
+#' founder combinations (funnels) is given by \eqn{n!/2^{n-1}}. Full design for
+#' 16 or more founders are impossible in practice, for example, a full design
+#' for 16 founders would have 638,512,875 funnels.
 #'
-#' @param n number of founders.
-#' @param inbred logical indicator of whether the founders are inbred (default to TRUE).
-#' @return an object of "cross.info" class, which is a list of
+#' @param n number of founders (4, 8).
+#' @param inbred logical indicator of whether the founders are inbred.
+#' @return an object of "cross.info" class, *i.e.* a list of
 #'         founder combinations (fcomb) and crossing plans (xplan).
 #'
 #' @examples
@@ -22,6 +22,9 @@ magic.full <- function(n, inbred=T){
 
   # check if n is within allowed values.
   if(!(n %in% c(4,8))) stop("n has to be either 4 or 8.")
+  
+  # argument check: inbred.
+  if(!is.logical(inbred)) stop("argument \"inbred\" has to be either TRUE (T) or FALSE (F).")
 
   # get the number of crossing generations.
   nx <- log(n, 2)

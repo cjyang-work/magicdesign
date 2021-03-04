@@ -1,19 +1,20 @@
 #' Simulate populations based on the MAGIC design.
 #'
-#' This function takes the crossing plans (xplan) and simulate populations based on
-#' the crossing plans. Simulation is done using AlphaSimR. The founder genotypes in
-#' the RILs from each simulation are summarized. Simulated marker data can also be
-#' exported, but preferably with n.sim set to 1 or any small value as the output file
-#' can be large.
+#' This function takes the crossing plans (xplan) and simulates populations based on
+#' the crossing plans. Simulation is done using
+#' [AlphaSimR](https://cran.r-project.org/web/packages/AlphaSimR/index.html). The founder genotypes in
+#' the RILs from each simulation are summarized. By default, the simulated marker data is
+#' not exported. If the simulated marker data is really required, please set
+#' `n.sim` to 1 or any small value as the output file can be large.
 #'
 #' @param xplan a list of crossing plans (xplan).
-#' @param inbred a logical indicator of whether the founders are inbred (default is TRUE).
-#' @param marker.dist a numerical value of marker distance in Morgan (default is 0.01).
-#' @param chr.len a vector of chromosome lengths in Morgan (default is c(1,2)).
-#' @param n.sim an integer of number of simulations (default is 1).
-#' @param hap.int a numerical value of marker interval for evaluating haplotypes (default is 0.05)).
-#' @param n.hap an integer of 1 or 2 haploid marker data of each RIL are used (default is 1).
-#' @param keep a logical indicator of whether to export the marker data (default is F).
+#' @param inbred a logical indicator of whether the founders are inbred.
+#' @param marker.dist a numerical value of marker distance in Morgan.
+#' @param chr.len a vector of chromosome lengths in Morgan.
+#' @param n.sim an integer of number of simulations.
+#' @param hap.int a numerical value of marker interval for evaluating haplotypes.
+#' @param n.hap an integer of 1 or 2 haploid marker data of each RIL are used.
+#' @param keep a logical indicator of whether to export the marker data.
 #' @return a list of simulation summary.
 #'
 #' @examples

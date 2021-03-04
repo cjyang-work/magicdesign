@@ -18,29 +18,30 @@ magic.sim(
 \arguments{
 \item{xplan}{a list of crossing plans (xplan).}
 
-\item{inbred}{a logical indicator of whether the founders are inbred (default is TRUE).}
+\item{inbred}{a logical indicator of whether the founders are inbred.}
 
-\item{marker.dist}{a numerical value of marker distance in Morgan (default is 0.01).}
+\item{marker.dist}{a numerical value of marker distance in Morgan.}
 
-\item{chr.len}{a vector of chromosome lengths in Morgan (default is c(1,2)).}
+\item{chr.len}{a vector of chromosome lengths in Morgan.}
 
-\item{n.sim}{an integer of number of simulations (default is 1).}
+\item{n.sim}{an integer of number of simulations.}
 
-\item{hap.int}{a numerical value of marker interval for evaluating haplotypes (default is 0.05)).}
+\item{hap.int}{a numerical value of marker interval for evaluating haplotypes.}
 
-\item{n.hap}{an integer of 1 or 2 haploid marker data of each RIL are used (default is 1).}
+\item{n.hap}{an integer of 1 or 2 haploid marker data of each RIL are used.}
 
-\item{keep}{a logical indicator of whether to export the marker data (default is F).}
+\item{keep}{a logical indicator of whether to export the marker data.}
 }
 \value{
 a list of simulation summary.
 }
 \description{
-This function takes the crossing plans (xplan) and simulate populations based on
-the crossing plans. Simulation is done using AlphaSimR. The founder genotypes in
-the RILs from each simulation are summarized. Simulated marker data can also be
-exported, but preferably with n.sim set to 1 or any small value as the output file
-can be large.
+This function takes the crossing plans (xplan) and simulates populations based on
+the crossing plans. Simulation is done using
+\href{https://cran.r-project.org/web/packages/AlphaSimR/index.html}{AlphaSimR}. The founder genotypes in
+the RILs from each simulation are summarized. By default, the simulated marker data is
+not exported. If the simulated marker data is really required, please set
+\code{n.sim} to 1 or any small value as the output file can be large.
 }
 \examples{
 \donttest{

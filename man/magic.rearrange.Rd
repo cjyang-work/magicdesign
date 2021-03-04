@@ -10,7 +10,7 @@ magic.rearrange(fmat)
 \item{fmat}{matrix of founder combinations.}
 }
 \value{
-an object of rearranged matrix of founder combinations.
+a rearranged matrix of founder combinations.
 }
 \description{
 This function rearranges a matrix of founder combinations such that smaller

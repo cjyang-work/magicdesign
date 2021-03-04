@@ -6,7 +6,7 @@
 #'
 #' @param xinfo an object of "cross.info" class.
 #' @param self a vector of number of selfing generations after each crossing generation.
-#' @return an object of "cross.info" class, which is a list of
+#' @return an object of "cross.info" class, *i.e.* a list of
 #'         founder combinations (fcomb) and crossing plans (xplan).
 #'
 #' @examples

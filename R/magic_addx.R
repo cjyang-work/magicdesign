@@ -1,20 +1,21 @@
-#' Include additional crossing generations.
+#' Add an extra crossing generation.
 #'
-#' This function takes the "cross.info" object and include an additional crossing
+#' This function takes the "cross.info" object and adds an extra crossing
 #' generation after the final n-way crosses have been made.
 #'
 #' @param xinfo an object of "cross.info" class.
 #' @param addx an integer of either 1 or 2 indicating the type of additional crosses.
 #' @param repx an integer of number of replicates from the additional crosses.
 #' @param selfx an integer of number of selfing generations after the additional crosses.
-#' @return an object of "cross.info" class, which is a list of
+#' @return an object of "cross.info" class, *i.e.* a list of
 #'         founder combinations (fcomb) and crossing plans (xplan).
 #'
 #' @details 
-#' There are two options available: addx=1 splits the n-way individuals into two equal pools
-#' and make all possible crosses between these two pools; addx=2 keeps the n-way individuals
+#' There are two options available: `addx=1` splits the n-way individuals into two equal pools
+#' and make all possible crosses between these two pools similar to the approach of
+#' [Stadlmeier et al 2018](https://doi.org/10.3389/fpls.2018.01825); `addx=2` keeps the n-way individuals
 #' in one pool and make all possible crosses within this one pool (random mating). Note
-#' that addx=1 is only available for basic design, and while addx=2 is not restricted
+#' that `addx=1` is only available for **basic design**. While `addx=2` is not restricted
 #' to just basic design, it is still not recommended for other designs.
 #'
 #' @examples
@@ -39,6 +40,9 @@ magic.addx <- function(xinfo, addx, repx, selfx){
   # get the total number of generations so far and last founder combination.
   n.gen <- length(xinfo[[1]])
   fmat <- xinfo[[1]][[n.gen]]
+  
+  # drop a message if nrow(fmat) is large.
+  if(nrow(fmat) > 1000) message("Random mating of >1000 individuals can be slow.")
   
   # add an additional crossing generation among the n-way lines if addx is either 1 or 2.
   if(addx == 1 & nrow(unique(fmat)) == 1 & nrow(fmat)%%2 == 0){

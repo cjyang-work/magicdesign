@@ -16,6 +16,8 @@ a list of crossing plans for each crossing generation (xplan).
 This function takes a user provided pedigree and converts it into a crossing plan
 that can be used in the simulation. The pedigree must have four columns in the
 following order: individual ID, parent 1 ID, parent 2 ID and generation number.
+The founders should be present in the pedigree with individual ID of 1 to \code{n},
+parent 1/2 IDs of 0 (or left empty), and generation number of 0.
 }
 \examples{
 \donttest{

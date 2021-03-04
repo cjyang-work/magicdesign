@@ -2,7 +2,7 @@
 % Please edit documentation in R/magic_ped2plot.R
 \name{magic.ped2plot}
 \alias{magic.ped2plot}
-\title{Plot pedigree generated from magic.eval().}
+\title{Plot pedigree.}
 \usage{
 magic.ped2plot(
   ped,
@@ -14,7 +14,7 @@ magic.ped2plot(
 )
 }
 \arguments{
-\item{ped}{a pedigree generated from magic.eval().}
+\item{ped}{a pedigree.}
 
 \item{filename}{a string of filename to save the pedigree plot file.}
 
@@ -22,17 +22,21 @@ magic.ped2plot(
 
 \item{show.partial}{a logical indicator of whether to plot a partial pedigree or not.}
 
-\item{w2h.ratio}{a numerical value of width-to-height-ratio in the pedigree plot
-(default is 2).}
+\item{w2h.ratio}{a numerical value of width-to-height-ratio in the pedigree plot.}
 
 \item{force.option}{a logical indicator of whether to force the function to plot
-using a simpler option (default is FALSE).}
+using a simpler option.}
 }
 \value{
 a HTML file of an interactive pedigree plot.
 }
 \description{
 This function plots the pedigree based on the type of design.
+By default, the function will plot a comprehensive pedigree for
+\code{n} of 4, 8, 16, 32, 64, 128 and a simple pedigree for other \code{n}.
+The pedigree is generated from either \link{magic.ped} or \link{magic.eval}.
+Note: if the MAGIC design is created from a user-provided pedigree,
+then the function will always plot a simple pedigree.
 }
 \examples{
 \donttest{

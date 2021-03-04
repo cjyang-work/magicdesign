@@ -4,24 +4,29 @@
 \alias{magic.deficient}
 \title{Create a deficient MAGIC design.}
 \usage{
-magic.deficient(n, m, balanced, inbred = T)
+magic.deficient(n, m, balanced = F, inbred = T)
 }
 \arguments{
 \item{n}{number of founders.}
 
-\item{m}{number of funnel sets (balanced=T) or funnels (balanced=F).}
+\item{m}{number of funnel sets (\code{balanced=T}) or funnels (\code{balanced=F}).}
 
 \item{balanced}{logical indicator of whether balanced partial design is chosen or ignored.}
 
-\item{inbred}{logical indicator of whether the founders are inbred (default to TRUE).}
+\item{inbred}{logical indicator of whether the founders are inbred.}
 }
 \value{
-an object of "cross.info" class, which is a list of
+an object of "cross.info" class, \emph{i.e.} a list of
 founder combinations (fcomb) and crossing plans (xplan).
 }
 \description{
-This function produces m (or m-set) founder combinations and crosses for
+This function produces \code{m} (or \code{m}-set) founder combinations and crosses for
 number of founders that is not a power of 2 (e.g. 3,5,6,7,9,...).
+For \code{balanced=T}, \code{n} is restricted to 3, 5-7, 9-15. For \code{balanced=F},
+\code{n} is limited to 3, 5-7, 9-15, 17-31, 33-63, 65-127.
+Please refer to the section on deficient MAGIC design in the
+\href{https://github.com/cjyang-sruc/magicdesign/magicdesign_vignette.pdf}{vignette}
+for more information on the accepted \code{m} values for each \code{n}.
 }
 \examples{
 \donttest{

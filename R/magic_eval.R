@@ -1,35 +1,32 @@
 #' Main function to design and test MAGIC population.
 #'
-#' This function takes various input arguments from user and simulate the desired
-#' MAGIC population. The MAGIC population can be designed from using either a pedigree
-#' or user-defined arguments, in which the latter includes MAGIC population types like
-#' full, partial, basic or deficient, as well as designs that are balanced or unbalanced.
+#' This function takes various input arguments from user and simulates the desired
+#' MAGIC design. The MAGIC population can be designed by either providing a pedigree
+#' or other input arguments. Depending on the input arguments, a full, partial, basic
+#' or deficient MAGIC design can be created. For the partial or deficient designs,
+#' the funnels can be generated in either a balanced or unbalanced (random) way.
+#' For further information, please refer to the
+#' [vignette](https://github.com/cjyang-sruc/magicdesign/magicdesign_vignette.pdf).
 #'
 #' @param ped a pedigree with 4 columns: individual ID, parent 1 ID, parent 2 ID, generation
-#'            number, in the format of either matrix or data.frame (default is NULL).
-#' @param n an integer of number of founders (default is NULL).
-#' @param m an integer of number of funnel sets if balanced=T or number of funnels if
-#'          balanced=F (default is NULL).
-#' @param reps a vector of replicates in each crossing generation (default is NULL).
-#' @param self a vector of number of generations to self after crossing (default is NULL).
-#' @param inbred a logical indicator of whether the founders are inbred (default is TRUE).
-#' @param balanced a logical indicator of whether a balanced partial design is desired
-#'                 (default is FALSE).
-#' @param minimize a logical indicator of whether to minimize crossing (default is NULL).
-#' @param n.try an integer of number of attempts to find balanced partial design (default
-#'              is 1000 and ignored if balanced=F or n > 8).
-#' @param addx an integer of either 1 or 2 indicating the type of additional crosses
-#'             (default is NULL).
-#' @param repx an integer of number of replicates in the additional crossing (default is 1).
-#' @param selfx an integer of number of generations to self after additional crossing
-#'              (default is 3).
-#' @param marker.dist a numerical value of marker distance in Morgan (default is 0.01).
-#' @param chr.len a vector of chromosome lengths in Morgan (default is c(1,2)).
-#' @param n.sim an integer of number of simulations (default is 1).
-#' @param hap.int a numerical value of marker interval for evaluating haplotypes (default
-#'                is 0.05).
-#' @param n.hap an integer of 1 or 2 haploid marker data of each RIL are used (default is 1).
-#' @param keep a logical indicator of whether to export the marker data (default is F).
+#'            number, in the format of either matrix or data.frame.
+#' @param n an integer of number of founders.
+#' @param m an integer of number of funnels (`balanced=F`) or funnel sets (`balanced=T`).
+#' @param reps a vector of replicates in each crossing generation.
+#' @param self a vector of number of generations to self after crossing.
+#' @param inbred a logical indicator of whether the founders are inbred.
+#' @param balanced a logical indicator of whether a balanced partial design is desired.
+#' @param minimize a logical indicator of whether to minimize crossing.
+#' @param n.try an integer of number of attempts to find balanced partial design (ignored if `balanced=F`).
+#' @param addx an integer of either 1 or 2 indicating the type of additional crosses.
+#' @param repx an integer of number of replicates in the additional crossing.
+#' @param selfx an integer of number of generations to self after additional crossing.
+#' @param marker.dist a numerical value of marker distance in Morgan.
+#' @param chr.len a vector of chromosome lengths in Morgan.
+#' @param n.sim an integer of number of simulations.
+#' @param hap.int a numerical value of marker interval for evaluating haplotypes.
+#' @param n.hap an integer of 1 or 2 haploid marker data of each RIL are used.
+#' @param keep a logical indicator of whether to export the marker data.
 #' @return a list of simulation summary.
 #'
 #' @examples
@@ -62,10 +59,10 @@ magic.eval <- function(ped=NULL,
   if(is.null(ped)){
     
     # argument check: n.
-    if(n < 3 | !(n%%1==0)) stop("n has to be a positive integer 3 or larger.")
+    if(n < 3 | !(n%%1==0) | n > 128) stop("n has to be a positive integer between 3 and 128.")
     
     # argument check: m.
-    if(m < 0 | !(n%%1==0)) stop("m has to be a non-negative integer.")
+    if(m < 0 | !(m%%1==0)) stop("m has to be a non-negative integer.")
     
     # get the number of crossing generations.
     nx <- ceiling(log(n,2))
@@ -77,7 +74,7 @@ magic.eval <- function(ped=NULL,
     }
     if(!is.numeric(reps) | !(length(reps)==nx)) stop("argument \"reps\" has to be a numeric vector of length ", nx, ".")
     if(any(reps < 1) | !all(reps%%1==0)) stop("argument \"reps\" has to be a vector of positive integers.")
-    
+
     # argument check: self.
     if(missing(self)){
       self <- c(rep(0, nx-1), 3)
@@ -85,42 +82,13 @@ magic.eval <- function(ped=NULL,
     }
     if(!is.numeric(self) | !(length(self)==nx)) stop("argument \"self\ has to be a vector of length ", nx, ".")
     if(any(self < 0) | !all(self%%1==0)) stop("argument \"self\ has to be a vector of non-negative integers.")
-    
+
     # argument check: balanced.
     if(!is.logical(balanced)) stop("argument \"balanced\" has to be either TRUE (T) or FALSE (F).")
-    
+
     # argument check: minimize.
     if(!is.logical(minimize)) stop("argument \"minimize\" has to be either TRUE (T) or FALSE (F).")
-    
-    # argument check: ranges of m.
-    m.check <- cbind(3:128,
-                     c(1,0,rep(1,3),0,rep(1,7),0,rep(1,15),0,rep(1,31),0,rep(1,63),0),
-                     c(1,1,48,285,135,45,rep(1000,120)),
-                     c(1,1,240,855,945,315,rep(10000,120)))
-    if(balanced & (m < m.check[m.check[,1]==n, 2] | m > m.check[m.check[,1]==n, 3])){
-      stop("invalid m for the selected n.")
-    } else if(!balanced & (m < m.check[m.check[,1]==n, 2] | m > m.check[m.check[,1]==n, 4])){
-      stop("invalid m for the selected n.")
-    }
-    
-    # argument check: IGNORED if n != 8 OR m == 0 OR  m >= 45 OR balanced=F.
-    if(n == 8 & m > 0 & m < 45 & balanced){
-      # argument check: n.try.
-      if(n.try < 1 | !(n.try%%1==0)) stop("argument \"n.try\" has to be a positive integer.")
-    }
-    
-    # argument check: IGNORED if m > 0.
-    if(m == 0){
-      # argument check: addx.
-      if(!any(addx==1:2)) stop("argument \"addx\" can only take either 1 or 2.")
-      
-      # argument check: repx.
-      if(repx < 1 | !(repx%%1==0)) stop("argument \"repx\" has to be a positive integer.")
-      
-      # argument check: selfx.
-      if(selfx < 0 | !(selfx%%1==0)) stop("argument \"selfx\" has to be a non-negative integer.")
-    }
-    
+
   }
   
   

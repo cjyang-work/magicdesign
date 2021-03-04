@@ -5,7 +5,7 @@
 #' multiple same crosses to one.
 #'
 #' @param xinfo an object of "cross.info" class.
-#' @return an object of "cross.info" class, which is a list of
+#' @return an object of "cross.info" class, *i.e.* a list of
 #'         founder combinations (fcomb) and crossing plans (xplan).
 #'
 #' @noRd

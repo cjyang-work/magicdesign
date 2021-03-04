@@ -9,21 +9,25 @@ magic.partial(n, m, balanced, n.try = 1000, inbred = T)
 \arguments{
 \item{n}{number of founders.}
 
-\item{m}{number of funnel sets (balanced=T) or funnels (balanced=F).}
+\item{m}{number of funnels (\code{balanced=F}) or funnel sets (\code{balanced=T}).}
 
 \item{balanced}{logical indicator of whether balanced partial design is chosen or ignored.}
 
-\item{n.try}{number of attempts to find balanced partial design (default to 1000, applicable only if n=8 and balanced=T).}
+\item{n.try}{number of attempts to find balanced partial design (ignored if \code{balanced=F}).}
 
-\item{inbred}{logical indicator of whether the founders are inbred (default to TRUE).}
+\item{inbred}{logical indicator of whether the founders are inbred.}
 }
 \value{
-an object of "cross.info" class, which is a list of
+an object of "cross.info" class, \code{i.e.} a list of
 founder combinations (fcomb) and crossing plans (xplan).
 }
 \description{
 This function produces m (or m-set) founder combinations and crosses for
-8 or more founders.
+8 or more founders. For \code{balanced=T}, \code{n} is restricted to 8 or 16.
+For \code{balanced=F}, \code{n} is limited to 8, 16, 32, 64, 128.
+Please refer to the section on partial MAGIC design in the
+\href{https://github.com/cjyang-sruc/magicdesign/magicdesign_vignette.pdf}{vignette}
+for more information on the accepted \code{m} values for each \code{n}.
 }
 \examples{
 \donttest{

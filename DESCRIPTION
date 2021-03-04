@@ -1,6 +1,6 @@
 Package: magicdesign
-Title: Multiparental Advanced Generation InterCross (MAGIC) population design and test.
-Version: 1.1.2
+Title: MAGIC population design and test.
+Version: 1.1.3
 Authors@R:
     c(person(given = "CJ",
              family = "Yang",
@@ -35,7 +35,7 @@ Author:
 Maintainer:
     CJ Yang <cyang@sruc.ac.uk>
 URL: https://github.com/cjyang-sruc/magicdesign
-Description: Design and test one or more Multiparental Advanced Generation InterCross (MAGIC) populations via simulation.
+Description: Design and test one or more Multiparental Advanced Generation Inter-Cross (MAGIC) populations via simulation.
 Depends:
     R (>= 3.3.0)
 Imports:
@@ -45,6 +45,7 @@ Imports:
     AlphaSimR,
     ggplot2,
     reshape2,
+    ggrepel,
     plotly,
     htmlwidgets
 Suggests:

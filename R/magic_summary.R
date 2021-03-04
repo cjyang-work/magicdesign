@@ -1,9 +1,9 @@
-#' Summarize the comparisons of different MAGIC designs in tables.
+#' Tabulate the comparisons of different MAGIC designs.
 #'
-#' This function takes a list of outputs from magic.eval() and compares the MAGIC designs.
-#' The same results from magic.plot() are shown in tables instead of figures.
+#' This function takes a list of outputs from [magic.eval] and compares the MAGIC designs.
+#' It is similar to [magic.plot], excepts the results are shown in tables instead of figures.
 #'
-#' @param input a list of outputs from magic.eval().
+#' @param input a list of outputs from [magic.eval].
 #' @return a list of 6 different comparisons.
 #'
 #' @seealso [magic.plot]

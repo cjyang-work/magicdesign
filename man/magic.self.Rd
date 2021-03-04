@@ -12,7 +12,7 @@ magic.self(xinfo, self)
 \item{self}{a vector of number of selfing generations after each crossing generation.}
 }
 \value{
-an object of "cross.info" class, which is a list of
+an object of "cross.info" class, \emph{i.e.} a list of
 founder combinations (fcomb) and crossing plans (xplan).
 }
 \description{

@@ -8,25 +8,28 @@ magic.plot(
   input,
   display = c("interval", "whole"),
   fpair = NULL,
-  chr.names = NULL
+  chr.names = NULL,
+  annotate = T
 )
 }
 \arguments{
-\item{input}{a list of outputs from magic.eval().}
+\item{input}{a list of one or more outputs from \link{magic.eval}.}
 
-\item{display}{a character indicator of whether "interval" or "whole" plot display is desired.}
+\item{display}{a character indicator of whether \code{"interval"} or \code{"whole"} plot display is desired.}
 
-\item{fpair}{a matrix of two columns of founder pairs (ignored if display="whole").}
+\item{fpair}{a matrix of two columns of founder pairs (ignored if \code{display="whole"}).}
 
 \item{chr.names}{a vector of chromosome names (optional).}
+
+\item{annotate}{a logical indicator of whether to annotate subplot C if \code{display="whole"}.}
 }
 \value{
 multi-section plots.
 }
 \description{
-This function takes a list of outputs from magic.eval() and compares the MAGIC designs
-via various plots. There are two plot display option available: "interval" highlights
-the recombinations within the previously specified hap.int argument, while "whole"
+This function takes a list of outputs from \link{magic.eval} and compares the MAGIC designs
+via various plots. There are two plot display options available: \code{"interval"} highlights
+the recombinations within the previously specified \code{hap.int} argument, while \code{"whole"}
 shows the distribution of founder genomes in the RILs.
 }
 \examples{
