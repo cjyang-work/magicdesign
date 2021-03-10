@@ -3,10 +3,10 @@
 #' This function takes various input arguments from user and simulates the desired
 #' MAGIC design. The MAGIC population can be designed by either providing a pedigree
 #' or other input arguments. Depending on the input arguments, a full, partial, basic
-#' or deficient MAGIC design can be created. For the partial or deficient designs,
+#' or NP2 MAGIC design can be created. For the partial or NP2 designs,
 #' the funnels can be generated in either a balanced or unbalanced (random) way.
 #' For further information, please refer to the
-#' [vignette](https://github.com/cjyang-sruc/magicdesign/magicdesign_vignette.pdf).
+#' [vignette](https://cjyang-sruc.github.io/magicdesign/vignette.html).
 #'
 #' @param ped a pedigree with 4 columns: individual ID, parent 1 ID, parent 2 ID, generation
 #'            number, in the format of either matrix or data.frame.
@@ -172,7 +172,7 @@ magic.eval <- function(ped=NULL,
       .m <- m
       .balanced <- balanced
       .inbred <- inbred
-      xinfo <- magic.deficient(n=.n, m=.m, balanced=.balanced, inbred=.inbred)
+      xinfo <- magic.NP2(n=.n, m=.m, balanced=.balanced, inbred=.inbred)
       
     }
     
@@ -272,7 +272,7 @@ magic.eval <- function(ped=NULL,
       repx <- 0
       selfx <- 0
       if(balanced){
-        info.nf <- m*(n-1)
+        info.nf <- m*c(0,0,3,3,5,3,7,7,9,5,11,3,13,7,15,15)[n]
       } else {
         info.nf <- m
       }
@@ -292,7 +292,7 @@ magic.eval <- function(ped=NULL,
                            "custom",
                            NA,
                            NA,
-                           info.cross,
+                           paste(info.cross, collapse=","),
                            length(xplan),
                            nrow(out[[3]][[1]])/n.hap,
                            NA)

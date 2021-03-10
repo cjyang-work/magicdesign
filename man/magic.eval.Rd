@@ -70,10 +70,10 @@ a list of simulation summary.
 This function takes various input arguments from user and simulates the desired
 MAGIC design. The MAGIC population can be designed by either providing a pedigree
 or other input arguments. Depending on the input arguments, a full, partial, basic
-or deficient MAGIC design can be created. For the partial or deficient designs,
+or NP2 MAGIC design can be created. For the partial or NP2 designs,
 the funnels can be generated in either a balanced or unbalanced (random) way.
 For further information, please refer to the
-\href{https://github.com/cjyang-sruc/magicdesign/magicdesign_vignette.pdf}{vignette}.
+\href{https://cjyang-sruc.github.io/magicdesign/vignette.html}{vignette}.
 }
 \examples{
 \donttest{
