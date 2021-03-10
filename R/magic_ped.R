@@ -115,7 +115,7 @@ magic.ped <- function(xinfo){
   out <- rbind(cbind(1:n,"","",0), out)
   
   # set the class.
-  class(out) <- if(log(n,2)%%1==0) "ped.perfect" else "ped.deficient"
+  class(out) <- if(log(n,2)%%1==0) "ped.perfect" else "ped.NP2"
   
   return(out)
 }
