@@ -26,7 +26,7 @@ This function produces m (or m-set) founder combinations and crosses for
 8 or more founders. For \code{balanced=T}, \code{n} is restricted to 8 or 16.
 For \code{balanced=F}, \code{n} is limited to 8, 16, 32, 64, 128.
 Please refer to the section on partial MAGIC design in the
-\href{https://github.com/cjyang-sruc/magicdesign/magicdesign_vignette.pdf}{vignette}
+\href{https://cjyang-sruc.github.io/magicdesign/vignette.html}{vignette}
 for more information on the accepted \code{m} values for each \code{n}.
 }
 \examples{

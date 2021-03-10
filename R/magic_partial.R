@@ -4,7 +4,7 @@
 #' 8 or more founders. For `balanced=T`, `n` is restricted to 8 or 16.
 #' For `balanced=F`, `n` is limited to 8, 16, 32, 64, 128.
 #' Please refer to the section on partial MAGIC design in the
-#' [vignette](https://github.com/cjyang-sruc/magicdesign/magicdesign_vignette.pdf)
+#' [vignette](https://cjyang-sruc.github.io/magicdesign/vignette.html)
 #' for more information on the accepted `m` values for each `n`.
 #'
 #' @param n number of founders.
@@ -34,7 +34,7 @@ magic.partial <- function(n, m, balanced, n.try=1000, inbred=T){
     m.check <- cbind(c(8, 16, 32, 64, 128),
                      c(1, 1, 1, 1, 1),
                      c(44, 100, 100, 100, 100),
-                     c(315, 10000, 10000, 10000, 10000))
+                     c(314, 10000, 10000, 10000, 10000))
     if(balanced & (m < m.check[m.check[,1]==n, 2] | m > m.check[m.check[,1]==n, 3])){
       stop("invalid m for the selected n.")
     } else if(!balanced & (m < m.check[m.check[,1]==n, 2] | m > m.check[m.check[,1]==n, 4])){
