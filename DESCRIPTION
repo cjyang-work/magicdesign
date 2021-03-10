@@ -39,7 +39,6 @@ Description: Design and test one or more Multiparental Advanced Generation Inter
 Depends:
     R (>= 3.3.0)
 Imports:
-    gtools,
     stringr,
     blocksdesign,
     AlphaSimR,
