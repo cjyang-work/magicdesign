@@ -40,7 +40,7 @@ magic.ped2plot <- function(ped, filename, basic=F, show.partial=F, w2h.ratio=2, 
     .ped <- ped
     .filename <- filename
     .w2h.ratio <- w2h.ratio
-    magic.ped4deficient(ped=.ped, filename=.filename, w2h.ratio=.w2h.ratio)
+    magic.ped4NP2(ped=.ped, filename=.filename, w2h.ratio=.w2h.ratio)
   }
   
 }
