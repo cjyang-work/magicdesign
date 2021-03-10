@@ -31,6 +31,7 @@ magic.plot <- function(input,
   
   # get some information from the input
   n.design <- length(input)
+  if(n.design > 6) warning("it can be hard to visualize plots with more than 6 designs, please consider reducing the number of designs.")
   
   n.sim <- unique(sapply(1:n.design, FUN=function(x) ncol(input[[x]][[2]])))
   if(length(n.sim) > 1) stop("all designs must have the same number of simulations.")
