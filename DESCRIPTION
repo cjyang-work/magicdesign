@@ -45,10 +45,10 @@ Imports:
     ggplot2,
     reshape2,
     ggrepel,
-    plotly,
-    htmlwidgets
+    plotly
 Suggests:
-    qtl2
+    qtl2,
+    htmlwidgets
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
