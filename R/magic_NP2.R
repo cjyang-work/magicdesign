@@ -34,7 +34,7 @@ magic.NP2 <- function(n, m, balanced=F, inbred=T){
   m.check <- cbind(c(3, 5:7, 9:15, 17:31, 33:63, 65:127),
                    c(1, rep(1,3), rep(1,7), rep(1,15), rep(1,31), rep(1,63)),
                    c(1, 48, 285, 135, rep(100, 116)),
-                   c(1, 240, 855, 945, rep(10000, 116)))
+                   c(3, 240, 855, 945, rep(10000, 116)))
   if(balanced & (m < m.check[m.check[,1]==n, 2] | m > m.check[m.check[,1]==n, 3])){
     stop("invalid m for the selected n.")
   } else if(!balanced & (m < m.check[m.check[,1]==n, 2] | m > m.check[m.check[,1]==n, 4])){
