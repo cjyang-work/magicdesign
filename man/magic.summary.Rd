@@ -4,10 +4,14 @@
 \alias{magic.summary}
 \title{Tabulate the comparisons of different MAGIC designs.}
 \usage{
-magic.summary(input)
+magic.summary(input, complete = F, design.names = NULL)
 }
 \arguments{
 \item{input}{a list of outputs from \link{magic.eval}.}
+
+\item{complete}{a logical indicator of whether to produce a complete summary or not.}
+
+\item{design.names}{a vector of design names (optional).}
 }
 \value{
 a list of 6 different comparisons.
