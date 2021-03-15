@@ -9,7 +9,8 @@ magic.plot(
   display = c("interval", "whole"),
   fpair = NULL,
   chr.names = NULL,
-  annotate = T
+  annotate = T,
+  design.names = NULL
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ magic.plot(
 \item{chr.names}{a vector of chromosome names (optional).}
 
 \item{annotate}{a logical indicator of whether to annotate subplot C if \code{display="whole"}.}
+
+\item{design.names}{a vector of design names (optional).}
 }
 \value{
 multi-section plots.
