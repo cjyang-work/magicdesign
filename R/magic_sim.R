@@ -4,8 +4,8 @@
 #' the crossing plans. Simulation is done using
 #' [AlphaSimR](https://cran.r-project.org/web/packages/AlphaSimR/index.html). The founder genotypes in
 #' the RILs from each simulation are summarized. By default, the simulated marker data is
-#' not exported. If the simulated marker data is really required, please set
-#' `n.sim` to 1 or any small value as the output file can be large.
+#' not kept. If the simulated marker data is really required, please set
+#' `n.sim` to 1 or any small value as the output object can be large.
 #'
 #' @param xplan a list of crossing plans (xplan).
 #' @param inbred a logical indicator of whether the founders are inbred.
@@ -14,7 +14,7 @@
 #' @param n.sim an integer of number of simulations.
 #' @param hap.int a numerical value of marker interval for evaluating haplotypes.
 #' @param n.hap an integer of 1 or 2 haploid marker data of each RIL are used.
-#' @param keep a logical indicator of whether to export the marker data.
+#' @param keep a logical indicator of whether to keep the marker data.
 #' @return a list of simulation summary.
 #'
 #' @examples
@@ -172,17 +172,23 @@ magic.sim <- function(xplan, inbred=T, marker.dist=0.01, chr.len=c(1,2), n.sim=1
           hap.keep[hap.keep==j] <- temp[j]
         }
       }
-      rownames(hap.keep) <- rep(i, nrow(hap.keep))
+      rownames(hap.keep) <- paste(i, 1:nrow(hap.keep), sep="_")
       out.hap <- rbind(out.hap, hap.keep)
     }
     
   }
   
-  if(keep){
-    temp <- paste("sim_ril_fhap_", gsub(" ", "_", gsub("-", "", gsub(":", "", Sys.time()))), ".csv", sep="")
-    write.csv(out.hap, temp, quote=F, row.names=T)
-  }
+  #if(keep){
+  #  temp <- paste("sim_ril_fhap_", gsub(" ", "_", gsub("-", "", gsub(":", "", Sys.time()))), ".csv", sep="")
+  #  write.csv(out.hap, temp, quote=F, row.names=T)
+  #}
   
-  return(list(rec=out.rec, fprop=out.fprop, fct=out.fct, lseg=out.lseg))
+  if(keep){
+    out <- list(rec=out.rec, fprop=out.fprop, fct=out.fct, lseg=out.lseg, hap=out.hap)
+  } else {
+    out <- list(rec=out.rec, fprop=out.fprop, fct=out.fct, lseg=out.lseg)
+  }
+
+  return(out)
 
 }

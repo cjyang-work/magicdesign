@@ -30,7 +30,7 @@ magic.sim(
 
 \item{n.hap}{an integer of 1 or 2 haploid marker data of each RIL are used.}
 
-\item{keep}{a logical indicator of whether to export the marker data.}
+\item{keep}{a logical indicator of whether to keep the marker data.}
 }
 \value{
 a list of simulation summary.
@@ -40,8 +40,8 @@ This function takes the crossing plans (xplan) and simulates populations based o
 the crossing plans. Simulation is done using
 \href{https://cran.r-project.org/web/packages/AlphaSimR/index.html}{AlphaSimR}. The founder genotypes in
 the RILs from each simulation are summarized. By default, the simulated marker data is
-not exported. If the simulated marker data is really required, please set
-\code{n.sim} to 1 or any small value as the output file can be large.
+not kept. If the simulated marker data is really required, please set
+\code{n.sim} to 1 or any small value as the output object can be large.
 }
 \examples{
 \donttest{
