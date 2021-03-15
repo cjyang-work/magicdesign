@@ -133,6 +133,8 @@ magic.eval <- function(ped=NULL,
         .n <- n
         .inbred <- inbred
         xinfo <- magic.full(n=.n, inbred=.inbred)
+      } else {
+        stop("m has to be either 0 or 1 for n=4.")
       }
       
     } else if(n == 8){
@@ -215,8 +217,7 @@ magic.eval <- function(ped=NULL,
     # get the crossing plan from user-supplied pedigree for use in simulation.
     .ped <- ped
     xplan <- magic.ped2cross(ped=.ped)
-    class(ped) <- "ped.custom"
-    
+
   }
   
   
