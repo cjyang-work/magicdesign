@@ -114,8 +114,8 @@ magic.ped <- function(xinfo){
   out <- gsub("_a", "", out)
   out <- rbind(cbind(1:n,"","",0), out)
   
-  # set the class.
-  class(out) <- if(log(n,2)%%1==0) "ped.perfect" else "ped.NP2"
+  # set the attributes.
+  if(log(n,2)%%1==0) attr(out, "complete") <- TRUE
   
   return(out)
 }
