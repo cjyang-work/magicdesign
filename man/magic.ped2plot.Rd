@@ -6,7 +6,6 @@
 \usage{
 magic.ped2plot(
   ped,
-  filename,
   basic = F,
   show.partial = F,
   w2h.ratio = 2,
@@ -15,8 +14,6 @@ magic.ped2plot(
 }
 \arguments{
 \item{ped}{a pedigree.}
-
-\item{filename}{a string of filename to save the pedigree plot file.}
 
 \item{basic}{a logical indicator of whether it is a basic design or not.}
 
@@ -41,7 +38,7 @@ then the function will always plot a simple pedigree.
 \examples{
 \donttest{
 mpop <- magic.eval(n=8, m=1, reps=c(1,1,2), self=c(0,0,3), balanced=T)
-magic.ped2plot(ped=mpop$ped, filename="filename")
+magic.ped2plot(ped=mpop$ped)
 }
 
 }

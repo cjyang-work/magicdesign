@@ -5,16 +5,14 @@
 #' of a power of 2.
 #'
 #' @param ped a pedigree.
-#' @param filename a string of filename to save the pedigree plot file.
 #' @param w2h.ratio a numerical value of width-to-height-ratio in the pedigree plot.
 #' @return a HTML file of an interactive pedigree plot.
 #'
 #' @noRd
 
-magic.ped4NP2 <- function(ped, filename, w2h.ratio=2){
+magic.ped4NP2 <- function(ped, w2h.ratio=2){
 
   # assign column names to ped.
-  class(ped) <- NULL
   colnames(ped) <- c("id","p1","p2","gen")
   ped <- data.frame(ped, stringsAsFactors=F)
   ped$gen <- as.numeric(ped$gen)
@@ -72,7 +70,7 @@ magic.ped4NP2 <- function(ped, filename, w2h.ratio=2){
   # calculate rship, where x1/y1 are the progeny x/y position, x2/y2 are the parent x/y position.
   # notice we rbind two data.frame, the top is to draw the line between progeny and parent 1,
   # and the bottom is to draw the line between progeny and parent 2.
-  idx <- ped[!(ped$p1=="" & ped$p2==""), ]
+  idx <- ped[!(ped$gen==0), ]
   idx <- cbind(sapply(1:nrow(idx), FUN=function(x) which(ped$id==idx$id[x])),
                sapply(1:nrow(idx), FUN=function(x) which(ped$id==idx$p1[x])),
                sapply(1:nrow(idx), FUN=function(x) which(ped$id==idx$p2[x])))
@@ -120,16 +118,17 @@ magic.ped4NP2 <- function(ped, filename, w2h.ratio=2){
     ggplot2::theme(axis.title=ggplot2::element_blank(), axis.text=ggplot2::element_blank(), axis.ticks=ggplot2::element_blank()) +
     ggplot2::coord_fixed(ratio=1)
   p <- plotly::ggplotly(p, tooltip="funnel")
-  p <- plotly::config(p, displaylogo=F, toImageButtonOptions=list(filename=filename, width=4200, height=floor(4200/w2h.ratio))) #width is equivalent to 7 in at 600dpi
+  p <- plotly::config(p, displaylogo=F, toImageButtonOptions=list(filename="pedigree", width=4200, height=floor(4200/w2h.ratio))) #width is equivalent to 7 in at 600dpi
   p <- plotly::highlight(p, on="plotly_click", off="plotly_doubleclick", color="#FF5050")
 
   # save the output in html format.
-  htmlwidgets::saveWidget(p, paste(filename, ".html", sep=""), selfcontained=T)
-  if(grepl("/", filename, fixed=T)){
-    message(paste("pedigree plot has been saved to ", filename, ".html", sep=""))
-  }
-  else {
-    message(paste("pedigree plot has been saved to ", getwd(), "/", filename, ".html", sep=""))
-  }
+  #htmlwidgets::saveWidget(p, paste(filename, ".html", sep=""), selfcontained=T)
+  #if(grepl("/", filename, fixed=T)){
+  #  message(paste("pedigree plot has been saved to ", filename, ".html", sep=""))
+  #}
+  #else {
+  #  message(paste("pedigree plot has been saved to ", getwd(), "/", filename, ".html", sep=""))
+  #}
   
+  return(p)
 }
