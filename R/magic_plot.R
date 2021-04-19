@@ -105,7 +105,7 @@ magic.plot <- function(input,
     dat3$design <- as.factor(dat3$design)
     dat3$design <- factor(dat3$design, levels=rev(levels(dat3$design)))
     dat3$rhap <- as.factor(dat3$rhap)
-    levels(dat3$rhap) <- fpair
+    #levels(dat3$rhap) <- fpair
 
     hues <- seq(15, 375, length=n.design+1)
     hues <- hcl(h=hues, l=65, c=100)[1:n.design]
