@@ -17,17 +17,20 @@
 #'
 #' @examples
 #' \donttest{
-#' mpop <- magic.eval(n=8, m=1, reps=c(1,1,2), self=c(0,0,3), balanced=T)
+#' mpop <- magic.eval(n=8, m=1, reps=c(1,1,2), self=c(0,0,3), balanced=TRUE)
 #' magic.ped2plot(ped=mpop$ped)
 #' }
 #'
 #' @export
 
-magic.ped2plot <- function(ped, basic=F, show.partial=F, w2h.ratio=2, force.option=F){
+magic.ped2plot <- function(ped, basic=FALSE, show.partial=FALSE, w2h.ratio=2, force.option=FALSE){
+
+  # if basic=TRUE, show.partial cannot be TRUE.
+  if(basic & show.partial) stop("show.partial has to be FALSE if basic is set to TRUE.")
 
   # use the more complete pedigree plotting option for pedigree generated from this tool (only available for n = 4,8,16,32,64,128).
   # for the others (e.g. user input pedigree, or other n), use the simpler pedigree plotting option.
-  # if there is a bug with the more complete pedigree plotting option, setting force.option=T will plot using the simpler option.
+  # if there is a bug with the more complete pedigree plotting option, setting force.option=TRUE will plot using the simpler option.
   if(!is.null(attr(ped, "complete")) & !force.option){
     .ped <- ped
     .basic <- basic
