@@ -3,13 +3,13 @@
 #' This function takes the "cross.info" object and add replicates to the crosses.
 #'
 #' @param xinfo an object of "cross.info" class.
-#' @param rep a vector of replicates in each crossing generation.
+#' @param reps a vector of replicates in each crossing generation.
 #' @return an object of "cross.info" class, *i.e.* a list of
 #'         founder combinations (fcomb) and crossing plans (xplan).
 #'
 #' @examples
 #' \donttest{
-#' mpop <- magic.partial(n=8, m=1, balanced=T)
+#' mpop <- magic.partial(n=8, m=1, balanced=TRUE)
 #' mpop <- magic.reps(xinfo=mpop, reps=c(1,1,2))
 #' }
 #'
@@ -18,7 +18,7 @@
 magic.reps <- function(xinfo, reps){
 
   # check if xinfo is an object of "cross.info" class.
-  if(!is(xinfo, "cross.info")) stop("xinfo has to be an object of \"cross.info\" class.")
+  if(!methods::is(xinfo, "cross.info")) stop("xinfo has to be an object of \"cross.info\" class.")
 
   # get the number of crossing generations.
   nx <- length(xinfo[[1]])
@@ -36,7 +36,7 @@ magic.reps <- function(xinfo, reps){
   for(i in 1:nx){
     rownames(fcomb[[i]]) <- 1:nrow(fcomb[[i]])
     fcomb[[i]] <- do.call(rbind, replicate(repc[i], list(fcomb[[i]])))
-    fcomb[[i]] <- fcomb[[i]][order(as.numeric(rownames(fcomb[[i]]))), , drop=F]
+    fcomb[[i]] <- fcomb[[i]][order(as.numeric(rownames(fcomb[[i]]))), , drop=FALSE]
     attr(fcomb[[i]], "dimnames") <- NULL
   }
   
@@ -55,13 +55,13 @@ magic.reps <- function(xinfo, reps){
       if(j == i){
         rownames(xplan[[j]]) <- 1:nrow(xplan[[j]])
         xplan[[j]] <- do.call(rbind, replicate(reps[i], list(xplan[[j]])))
-        xplan[[j]] <- xplan[[j]][order(as.numeric(rownames(xplan[[j]]))), , drop=F]
+        xplan[[j]] <- xplan[[j]][order(as.numeric(rownames(xplan[[j]]))), , drop=FALSE]
         attr(xplan[[i]], "dimnames") <- NULL
       } else {
         rownames(xplan[[j]]) <- 1:nrow(xplan[[j]])
         temp <- lapply(1:reps[i], FUN=function(x) (xplan[[j]] - 1)*reps[i] + x )
         xplan[[j]] <- do.call(rbind, temp)
-        xplan[[j]] <- xplan[[j]][order(as.numeric(rownames(xplan[[j]]))), , drop=F]
+        xplan[[j]] <- xplan[[j]][order(as.numeric(rownames(xplan[[j]]))), , drop=FALSE]
         attr(xplan[[i]], "dimnames") <- NULL
       }
     }
