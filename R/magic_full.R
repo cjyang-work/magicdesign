@@ -18,7 +18,7 @@
 #'
 #' @export
 
-magic.full <- function(n, inbred=T){
+magic.full <- function(n, inbred=TRUE){
 
   # check if n is within allowed values.
   if(!(n %in% c(4,8))) stop("n has to be either 4 or 8.")
