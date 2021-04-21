@@ -2,14 +2,14 @@
 #'
 #' This function produces `m` (or `m`-set) founder combinations and crosses for
 #' number of founders that is not a power of 2 (e.g. 3,5,6,7,9,...).
-#' For `balanced=T`, `n` is restricted to 3, 5-7, 9-15. For `balanced=F`,
+#' For `balanced=TRUE`, `n` is restricted to 3, 5-7, 9-15. For `balanced=FALSE`,
 #' `n` is limited to 3, 5-7, 9-15, 17-31, 33-63, 65-127.
 #' Please refer to the section on NP2 MAGIC design in the
-#' [vignette](https://cjyang-sruc.github.io/magicdesign/vignette.html)
+#' [vignette](https://cjyang-sruc.github.io/files/magicdesign_vignette)
 #' for more information on the accepted `m` values for each `n`.
 #'
 #' @param n number of founders.
-#' @param m number of funnel sets (`balanced=T`) or funnels (`balanced=F`).
+#' @param m number of funnel sets (`balanced=TRUE`) or funnels (`balanced=FALSE`).
 #' @param balanced logical indicator of whether balanced partial design is chosen or ignored.
 #' @param inbred logical indicator of whether the founders are inbred.
 #' @return an object of "cross.info" class, *i.e.* a list of
@@ -17,12 +17,12 @@
 #'
 #' @examples
 #' \donttest{
-#' mpop <- magic.NP2(n=5, m=2, balanced=T)
+#' mpop <- magic.NP2(n=5, m=2, balanced=TRUE)
 #' }
 #'
 #' @export
 
-magic.NP2 <- function(n, m, balanced=F, inbred=T){
+magic.NP2 <- function(n, m, balanced=FALSE, inbred=TRUE){
   
   # check to make sure that n is larger than 2 and not a power of 2.
   if(n < 3 | log(n,2)%%1==0 | n > 128) stop("n has to be between 3 to 127 and not a power of 2.")
@@ -56,8 +56,8 @@ magic.NP2 <- function(n, m, balanced=F, inbred=T){
   
   # full design is only available for n=3,5,6,7.
   # full design requires m=1,48,285,135 for n=3,5,6,7 respectively.
-  # for partial designs, if balanced=T, m indicates number of semi-balanced funnel sets.
-  # for partial designs, if balanced=F, m indicates number of funnels.
+  # for partial designs, if balanced=TRUE, m indicates number of semi-balanced funnel sets.
+  # for partial designs, if balanced=FALSE, m indicates number of funnels.
   if(balanced){
     
     if(n==3 & m==1){
@@ -127,15 +127,15 @@ magic.NP2 <- function(n, m, balanced=F, inbred=T){
       while(k < m){
         
         # randomly generate one funnel.
-        temp <- c(1:n, sample(1:n, n0-n, replace=F))
-        temp <- sample(temp, n0, replace=F)
+        temp <- c(1:n, sample(1:n, n0-n, replace=FALSE))
+        temp <- sample(temp, n0, replace=FALSE)
         temp <- magic.rearrange(fmat=matrix(temp,nrow=1))
         
         # check if the funnel involves crosses of two same individuals, e.g. 1;2 x 1;2.
         b <- vector()
         for(i in 1:nx){
           a <- matrix(temp, nrow=2^(nx-i+1))
-          b <- c(b, any(rowSums(a[seq(1,nrow(a),2),,drop=F] == a[seq(2,nrow(a),2),,drop=F]) == 2^(i-1)))
+          b <- c(b, any(rowSums(a[seq(1,nrow(a),2),,drop=FALSE] == a[seq(2,nrow(a),2),,drop=FALSE]) == 2^(i-1)))
         }
         temp <- rbind(fmat, temp)
         
