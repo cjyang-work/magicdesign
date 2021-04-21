@@ -12,15 +12,15 @@
 #'
 #' @examples
 #' \donttest{
-#' mpop1 <- magic.eval(n=8, m=1, reps=c(1,1,4), self=c(0,0,3), balanced=T, n.sim=10)
-#' mpop2 <- magic.eval(n=8, m=7, reps=c(1,1,4), self=c(0,0,3), balanced=F, n.sim=10)
+#' mpop1 <- magic.eval(n=8, m=1, reps=c(1,1,4), self=c(0,0,3), balanced=TRUE, n.sim=10)
+#' mpop2 <- magic.eval(n=8, m=7, reps=c(1,1,4), self=c(0,0,3), balanced=FALSE, n.sim=10)
 #' mpop <- magic.summary(input=list(mpop1, mpop2))
 #' }
 #'
 #' @export
 
 
-magic.summary <- function(input, complete=F, design.names=NULL){
+magic.summary <- function(input, complete=FALSE, design.names=NULL){
 
   # get some information from the input
   n.design <- length(input)
@@ -46,7 +46,7 @@ magic.summary <- function(input, complete=F, design.names=NULL){
   
   # get the information about all the designs under comparison.
   dat <- sapply(1:n.design, FUN=function(x) attr(input[[x]], "info"))
-  dat <- data.frame(dat, stringsAsFactors=F)
+  dat <- data.frame(dat, stringsAsFactors=FALSE)
   rownames(dat) <- c("founder", "type", "reps", "self", "cross", "generation", "RIL", "funnel")
   colnames(dat) <- paste("design ", design.names, sep="")
 
@@ -55,12 +55,12 @@ magic.summary <- function(input, complete=F, design.names=NULL){
     
     # out1: proportions of all recombinant haplotypes.
     out1 <- data.frame(mean=sapply(1:n.design, FUN=function(x) mean(colSums(input[[x]][[2]]))),
-                       variance=sapply(1:n.design, FUN=function(x) var(colSums(input[[x]][[2]]))))
+                       variance=sapply(1:n.design, FUN=function(x) stats::var(colSums(input[[x]][[2]]))))
     rownames(out1) <- paste("design ", design.names, sep="")
 
     # out2: number of unique recombinant haplotypes.
     out2 <- data.frame(mean=sapply(1:n.design, FUN=function(x) mean(colSums(!(input[[x]][[2]]==0)))),
-                       variance=sapply(1:n.design, FUN=function(x) var(colSums(!(input[[x]][[2]]==0)))))
+                       variance=sapply(1:n.design, FUN=function(x) stats::var(colSums(!(input[[x]][[2]]==0)))))
     rownames(out2) <- paste("design ", design.names, sep="")
     
     # out3: proportions of individual recombinant haplotypes.
@@ -70,7 +70,7 @@ magic.summary <- function(input, complete=F, design.names=NULL){
     }
     
     for(i in 1:n.design){
-      out3 <- cbind(out3, sapply(1:nrow(input[[i]][[2]]), FUN=function(x) var(input[[i]][[2]][x,])))
+      out3 <- cbind(out3, sapply(1:nrow(input[[i]][[2]]), FUN=function(x) stats::var(input[[i]][[2]][x,])))
     }
     
     out3 <- data.frame(out3)
@@ -89,7 +89,7 @@ magic.summary <- function(input, complete=F, design.names=NULL){
     }
     
     for(i in 1:n.design){
-      out4 <- cbind(out4, sapply(1:n, FUN=function(x) var(temp[[i]][[x]])))
+      out4 <- cbind(out4, sapply(1:n, FUN=function(x) stats::var(temp[[i]][[x]])))
     }
     
     out4 <- data.frame(out4)
@@ -126,7 +126,7 @@ magic.summary <- function(input, complete=F, design.names=NULL){
     
     for(i in 1:(n.chr+1)){
       for(j in 1:n.design){
-        out5[[i]] <- cbind(out5[[i]], sapply(1:n, FUN=function(x) var(temp[[j]][[i]][, x])))
+        out5[[i]] <- cbind(out5[[i]], sapply(1:n, FUN=function(x) stats::var(temp[[j]][[i]][, x])))
       }
     }
     
@@ -148,7 +148,7 @@ magic.summary <- function(input, complete=F, design.names=NULL){
     
     for(i in 1:n.chr){
       for(j in 1:n.design){
-        out6[[i]] <- cbind(out6[[i]], sapply(1:nrow(input[[j]][[5]][[i]]), FUN=function(x) var(input[[j]][[5]][[i]][x, ])))
+        out6[[i]] <- cbind(out6[[i]], sapply(1:nrow(input[[j]][[5]][[i]]), FUN=function(x) stats::var(input[[j]][[5]][[i]][x, ])))
       }
     }
     
