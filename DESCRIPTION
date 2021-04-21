@@ -1,5 +1,5 @@
 Package: magicdesign
-Title: MAGIC population design and test.
+Title: MAGIC population design and test
 Version: 1.1.3
 Authors@R:
     c(person(given = "CJ",
@@ -39,6 +39,10 @@ Description: Design and test one or more Multiparental Advanced Generation Inter
 Depends:
     R (>= 3.3.0)
 Imports:
+    grDevices,
+    methods,
+    stats,
+    utils,
     stringr,
     blocksdesign,
     AlphaSimR,
