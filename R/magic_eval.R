@@ -253,6 +253,10 @@ magic.eval <- function(ped=NULL,
     
     if(info.type == "basic"){
       info.nf <- 1
+      if(is.null(addx)){
+        repx <- 0
+        selfx <- 0
+      }
     } else if(info.type == "full"){
       repx <- 0
       selfx <- 0
