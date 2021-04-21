@@ -14,7 +14,7 @@ magic.ped4NP2 <- function(ped, w2h.ratio=2){
 
   # assign column names to ped.
   colnames(ped) <- c("id","p1","p2","gen")
-  ped <- data.frame(ped, stringsAsFactors=F)
+  ped <- data.frame(ped, stringsAsFactors=FALSE)
   ped$gen <- as.numeric(ped$gen)
   
   # identify the number of founder (n) and total generations (n.gen).
@@ -54,17 +54,17 @@ magic.ped4NP2 <- function(ped, w2h.ratio=2){
       pos <- rbind(pos, c(sum(ped.dist[[i]][1:j]) + 0.25*(2*j-1), max(ped.width)/max(ped$gen)*(length(ped.dist)-i+1)/w2h.ratio))
     }
   }
-  pos <- data.frame(pos, stringsAsFactors=F)
+  pos <- data.frame(pos, stringsAsFactors=FALSE)
   colnames(pos) <- c("x", "y")
   
   # get the final RIL/funnel names.
   temp <- ped$id[ped$gen==n.gen]
   
   # here, we expand pos to cover each funnel separately.
-  pos <- data.frame(gen=ped$gen, pos, stringsAsFactors=F)
+  pos <- data.frame(gen=ped$gen, pos, stringsAsFactors=FALSE)
   temp.pos <- vector()
   for(i in 1:nrow(lineage)){
-    temp.pos <- rbind(temp.pos, cbind(pos[lineage[i,], , drop=F], funnel=temp[i]))
+    temp.pos <- rbind(temp.pos, cbind(pos[lineage[i,], , drop=FALSE], funnel=temp[i]))
   }
   
   # calculate rship, where x1/y1 are the progeny x/y position, x2/y2 are the parent x/y position.
@@ -84,13 +84,13 @@ magic.ped4NP2 <- function(ped, w2h.ratio=2){
                                            x2=pos$x[temp.idx[,2]],
                                            y2=pos$y[temp.idx[,2]],
                                            funnel=temp[i],
-                                           stringsAsFactors=F),
+                                           stringsAsFactors=FALSE),
                                 data.frame(x1=pos$x[temp.idx[,1]],
                                            y1=pos$y[temp.idx[,1]],
                                            x2=pos$x[temp.idx[,3]],
                                            y2=pos$y[temp.idx[,3]],
                                            funnel=temp[i],
-                                           stringsAsFactors=F)))
+                                           stringsAsFactors=FALSE)))
   }
   
   pos <- temp.pos
@@ -118,12 +118,12 @@ magic.ped4NP2 <- function(ped, w2h.ratio=2){
     ggplot2::theme(axis.title=ggplot2::element_blank(), axis.text=ggplot2::element_blank(), axis.ticks=ggplot2::element_blank()) +
     ggplot2::coord_fixed(ratio=1)
   p <- plotly::ggplotly(p, tooltip="funnel")
-  p <- plotly::config(p, displaylogo=F, toImageButtonOptions=list(filename="pedigree", width=4200, height=floor(4200/w2h.ratio))) #width is equivalent to 7 in at 600dpi
+  p <- plotly::config(p, displaylogo=FALSE, toImageButtonOptions=list(filename="pedigree", width=4200, height=floor(4200/w2h.ratio))) #width is equivalent to 7 in at 600dpi
   p <- plotly::highlight(p, on="plotly_click", off="plotly_doubleclick", color="#FF5050")
 
   # save the output in html format.
-  #htmlwidgets::saveWidget(p, paste(filename, ".html", sep=""), selfcontained=T)
-  #if(grepl("/", filename, fixed=T)){
+  #htmlwidgets::saveWidget(p, paste(filename, ".html", sep=""), selfcontained=TRUE)
+  #if(grepl("/", filename, fixed=TRUE)){
   #  message(paste("pedigree plot has been saved to ", filename, ".html", sep=""))
   #}
   #else {
