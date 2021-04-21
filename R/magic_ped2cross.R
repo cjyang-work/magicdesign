@@ -37,7 +37,7 @@ magic.ped2cross <- function(ped){
   if(!(length(unique(ped[,1])) == nrow(ped))) stop("The first column of the pedigree should contain unique IDs for each individual.")
   
   # separate the ped into list of ped based on generation.
-  ped <- lapply(0:n.gen, FUN=function(x) ped[ped[,4]==x, 1:3, drop=F])
+  ped <- lapply(0:n.gen, FUN=function(x) ped[ped[,4]==x, 1:3, drop=FALSE])
   
   # check if the parents can be found in previous generations.
   for(i in 2:(n.gen+1)){
