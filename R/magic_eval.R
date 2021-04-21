@@ -11,13 +11,13 @@
 #' @param ped a pedigree with 4 columns: individual ID, parent 1 ID, parent 2 ID, generation
 #'            number, in the format of either matrix or data.frame.
 #' @param n an integer of number of founders.
-#' @param m an integer of number of funnels (`balanced=F`) or funnel sets (`balanced=T`).
+#' @param m an integer of number of funnels (`balanced=FALSE`) or funnel sets (`balanced=TRUE`).
 #' @param reps a vector of replicates in each crossing generation.
 #' @param self a vector of number of generations to self after crossing.
 #' @param inbred a logical indicator of whether the founders are inbred.
 #' @param balanced a logical indicator of whether a balanced partial design is desired.
 #' @param minimize a logical indicator of whether to minimize crossing.
-#' @param n.try an integer of number of attempts to find balanced partial design (ignored if `balanced=F`).
+#' @param n.try an integer of number of attempts to find balanced partial design (ignored if `balanced=FALSE`).
 #' @param addx an integer of either 1 or 2 indicating the type of additional crosses.
 #' @param repx an integer of number of replicates in the additional crossing.
 #' @param selfx an integer of number of generations to self after additional crossing.
@@ -31,7 +31,7 @@
 #'
 #' @examples
 #' \donttest{
-#' mpop <- magic.eval(n=8, m=1, reps=c(1,1,2), self=c(0,0,3), balanced=T)
+#' mpop <- magic.eval(n=8, m=1, reps=c(1,1,2), self=c(0,0,3), balanced=TRUE)
 #' }
 #'
 #' @export
@@ -41,9 +41,9 @@ magic.eval <- function(ped=NULL,
                        m=NULL,
                        reps=NULL,
                        self=NULL,
-                       inbred=T,
-                       balanced=F,
-                       minimize=F,
+                       inbred=TRUE,
+                       balanced=FALSE,
+                       minimize=FALSE,
                        n.try=1000,
                        addx=NULL,
                        repx=1,
@@ -53,7 +53,7 @@ magic.eval <- function(ped=NULL,
                        n.sim=1,
                        hap.int=0.05,
                        n.hap=1,
-                       keep=F){
+                       keep=FALSE){
 
   # argument checks if ped is not provided.
   if(is.null(ped)){
