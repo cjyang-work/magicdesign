@@ -13,7 +13,7 @@
 magic.minimize <- function(xinfo){
 
   # check if xinfo is an object of "cross.info" class.
-  if(!is(xinfo, "cross.info")) stop("xinfo has to be an object of \"cross.info\" class.")
+  if(!methods::is(xinfo, "cross.info")) stop("xinfo has to be an object of \"cross.info\" class.")
 
   # get the founder combination and number of crossing generations.
   fcomb <- xinfo[[1]]
