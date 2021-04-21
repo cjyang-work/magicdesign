@@ -30,7 +30,7 @@
 magic.addx <- function(xinfo, addx, repx, selfx){
 
   # check if xinfo is an object of "cross.info" class.
-  if(!is(xinfo, "cross.info")) stop("xinfo has to be an object of \"cross.info\" class.")
+  if(!methods::is(xinfo, "cross.info")) stop("xinfo has to be an object of \"cross.info\" class.")
   
   # check if addx, repx and selfx are within allowed values.
   if(!(addx %in% c(1,2))) stop("addx has to be either 1 or 2.")
@@ -54,7 +54,7 @@ magic.addx <- function(xinfo, addx, repx, selfx){
     
   } else if(addx == 2 & nrow(fmat) > 1){
     
-    temp <- t(combn(nrow(fmat), 2))
+    temp <- t(utils::combn(nrow(fmat), 2))
     xinfo[[1]] <- c(xinfo[[1]], list(cbind(fmat[temp[,1], , drop=F], fmat[temp[,2], , drop=F])))
     xinfo[[2]] <- c(xinfo[[2]], list(temp))
     
