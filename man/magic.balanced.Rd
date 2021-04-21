@@ -4,7 +4,7 @@
 \alias{magic.balanced}
 \title{Check if a MAGIC design is balanced.}
 \usage{
-magic.balanced(fmat, verbose = F)
+magic.balanced(fmat, verbose = FALSE)
 }
 \arguments{
 \item{fmat}{a matrix of founder combinations.}
@@ -13,7 +13,7 @@ magic.balanced(fmat, verbose = F)
 }
 \value{
 a logical indicator of whether the MAGIC design is balanced or not, and
-also a table of all founder pairings if \code{verbose=T}.
+also a table of all founder pairings if \code{verbose=TRUE}.
 }
 \description{
 This function takes a matrix of founder combinations and determines if the design
@@ -21,7 +21,7 @@ is balanced or not. The matrix rows are funnels and columns are founders.
 }
 \examples{
 \donttest{
-mpop <- magic.partial(n=8, m=1, balanced=T)
+mpop <- magic.partial(n=8, m=1, balanced=TRUE)
 magic.balanced(mpop$fcomb[[3]])
 }
 

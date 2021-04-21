@@ -6,10 +6,10 @@
 \usage{
 magic.ped2plot(
   ped,
-  basic = F,
-  show.partial = F,
+  basic = FALSE,
+  show.partial = FALSE,
   w2h.ratio = 2,
-  force.option = F
+  force.option = FALSE
 )
 }
 \arguments{
@@ -37,7 +37,7 @@ then the function will always plot a simple pedigree.
 }
 \examples{
 \donttest{
-mpop <- magic.eval(n=8, m=1, reps=c(1,1,2), self=c(0,0,3), balanced=T)
+mpop <- magic.eval(n=8, m=1, reps=c(1,1,2), self=c(0,0,3), balanced=TRUE)
 magic.ped2plot(ped=mpop$ped)
 }
 

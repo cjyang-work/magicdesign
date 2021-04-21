@@ -22,7 +22,7 @@ generation.
 }
 \examples{
 \donttest{
-mpop <- magic.partial(n=8, m=1, balanced=T)
+mpop <- magic.partial(n=8, m=1, balanced=TRUE)
 mpop <- magic.self(xinfo=mpop, self=c(0,0,3))
 }
 

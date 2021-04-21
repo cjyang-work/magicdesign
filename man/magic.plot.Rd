@@ -9,7 +9,7 @@ magic.plot(
   display = c("interval", "whole"),
   fpair = NULL,
   chr.names = NULL,
-  annotate = T,
+  annotate = TRUE,
   design.names = NULL
 )
 }
@@ -37,8 +37,8 @@ shows the distribution of founder genomes in the RILs.
 }
 \examples{
 \donttest{
-mpop1 <- magic.eval(n=8, m=1, reps=c(1,1,4), self=c(0,0,3), balanced=T, n.sim=10)
-mpop2 <- magic.eval(n=8, m=7, reps=c(1,1,4), self=c(0,0,3), balanced=F, n.sim=10)
+mpop1 <- magic.eval(n=8, m=1, reps=c(1,1,4), self=c(0,0,3), balanced=TRUE, n.sim=10)
+mpop2 <- magic.eval(n=8, m=7, reps=c(1,1,4), self=c(0,0,3), balanced=FALSE, n.sim=10)
 magic.plot(input=list(mpop1, mpop2), display="interval")
 }
 

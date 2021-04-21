@@ -9,7 +9,7 @@ magic.reps(xinfo, reps)
 \arguments{
 \item{xinfo}{an object of "cross.info" class.}
 
-\item{rep}{a vector of replicates in each crossing generation.}
+\item{reps}{a vector of replicates in each crossing generation.}
 }
 \value{
 an object of "cross.info" class, \emph{i.e.} a list of
@@ -20,7 +20,7 @@ This function takes the "cross.info" object and add replicates to the crosses.
 }
 \examples{
 \donttest{
-mpop <- magic.partial(n=8, m=1, balanced=T)
+mpop <- magic.partial(n=8, m=1, balanced=TRUE)
 mpop <- magic.reps(xinfo=mpop, reps=c(1,1,2))
 }
 

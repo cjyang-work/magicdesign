@@ -4,16 +4,16 @@
 \alias{magic.partial}
 \title{Create a partial MAGIC design.}
 \usage{
-magic.partial(n, m, balanced, n.try = 1000, inbred = T)
+magic.partial(n, m, balanced, n.try = 1000, inbred = TRUE)
 }
 \arguments{
 \item{n}{number of founders.}
 
-\item{m}{number of funnels (\code{balanced=F}) or funnel sets (\code{balanced=T}).}
+\item{m}{number of funnels (\code{balanced=FALSE}) or funnel sets (\code{balanced=TRUE}).}
 
 \item{balanced}{logical indicator of whether balanced partial design is chosen or ignored.}
 
-\item{n.try}{number of attempts to find balanced partial design (ignored if \code{balanced=F}).}
+\item{n.try}{number of attempts to find balanced partial design (ignored if \code{balanced=FALSE}).}
 
 \item{inbred}{logical indicator of whether the founders are inbred.}
 }
@@ -23,15 +23,15 @@ founder combinations (fcomb) and crossing plans (xplan).
 }
 \description{
 This function produces m (or m-set) founder combinations and crosses for
-8 or more founders. For \code{balanced=T}, \code{n} is restricted to 8 or 16.
-For \code{balanced=F}, \code{n} is limited to 8, 16, 32, 64, 128.
+8 or more founders. For \code{balanced=TRUE}, \code{n} is restricted to 8 or 16.
+For \code{balanced=FALSE}, \code{n} is limited to 8, 16, 32, 64, 128.
 Please refer to the section on partial MAGIC design in the
-\href{https://cjyang-sruc.github.io/magicdesign/vignette.html}{vignette}
+\href{https://cjyang-sruc.github.io/files/magicdesign_vignette}{vignette}
 for more information on the accepted \code{m} values for each \code{n}.
 }
 \examples{
 \donttest{
-mpop <- magic.partial(n=8, m=1, balanced=T)
+mpop <- magic.partial(n=8, m=1, balanced=TRUE)
 }
 
 }

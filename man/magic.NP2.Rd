@@ -4,12 +4,12 @@
 \alias{magic.NP2}
 \title{Create a Non-Power of 2 (NP2) MAGIC design.}
 \usage{
-magic.NP2(n, m, balanced = F, inbred = T)
+magic.NP2(n, m, balanced = FALSE, inbred = TRUE)
 }
 \arguments{
 \item{n}{number of founders.}
 
-\item{m}{number of funnel sets (\code{balanced=T}) or funnels (\code{balanced=F}).}
+\item{m}{number of funnel sets (\code{balanced=TRUE}) or funnels (\code{balanced=FALSE}).}
 
 \item{balanced}{logical indicator of whether balanced partial design is chosen or ignored.}
 
@@ -22,15 +22,15 @@ founder combinations (fcomb) and crossing plans (xplan).
 \description{
 This function produces \code{m} (or \code{m}-set) founder combinations and crosses for
 number of founders that is not a power of 2 (e.g. 3,5,6,7,9,...).
-For \code{balanced=T}, \code{n} is restricted to 3, 5-7, 9-15. For \code{balanced=F},
+For \code{balanced=TRUE}, \code{n} is restricted to 3, 5-7, 9-15. For \code{balanced=FALSE},
 \code{n} is limited to 3, 5-7, 9-15, 17-31, 33-63, 65-127.
 Please refer to the section on NP2 MAGIC design in the
-\href{https://cjyang-sruc.github.io/magicdesign/vignette.html}{vignette}
+\href{https://cjyang-sruc.github.io/files/magicdesign_vignette}{vignette}
 for more information on the accepted \code{m} values for each \code{n}.
 }
 \examples{
 \donttest{
-mpop <- magic.NP2(n=5, m=2, balanced=T)
+mpop <- magic.NP2(n=5, m=2, balanced=TRUE)
 }
 
 }

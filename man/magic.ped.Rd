@@ -18,7 +18,7 @@ has 4 columns: individual ID, parent 1 ID, parent 2 ID and generation number.
 }
 \examples{
 \donttest{
-mpop <- magic.partial(n=8, m=1, balanced=T)
+mpop <- magic.partial(n=8, m=1, balanced=TRUE)
 mped <- magic.ped(xinfo=mpop)
 }
 

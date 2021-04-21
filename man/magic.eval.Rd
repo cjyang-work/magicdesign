@@ -10,9 +10,9 @@ magic.eval(
   m = NULL,
   reps = NULL,
   self = NULL,
-  inbred = T,
-  balanced = F,
-  minimize = F,
+  inbred = TRUE,
+  balanced = FALSE,
+  minimize = FALSE,
   n.try = 1000,
   addx = NULL,
   repx = 1,
@@ -22,7 +22,7 @@ magic.eval(
   n.sim = 1,
   hap.int = 0.05,
   n.hap = 1,
-  keep = F
+  keep = FALSE
 )
 }
 \arguments{
@@ -31,7 +31,7 @@ number, in the format of either matrix or data.frame.}
 
 \item{n}{an integer of number of founders.}
 
-\item{m}{an integer of number of funnels (\code{balanced=F}) or funnel sets (\code{balanced=T}).}
+\item{m}{an integer of number of funnels (\code{balanced=FALSE}) or funnel sets (\code{balanced=TRUE}).}
 
 \item{reps}{a vector of replicates in each crossing generation.}
 
@@ -43,7 +43,7 @@ number, in the format of either matrix or data.frame.}
 
 \item{minimize}{a logical indicator of whether to minimize crossing.}
 
-\item{n.try}{an integer of number of attempts to find balanced partial design (ignored if \code{balanced=F}).}
+\item{n.try}{an integer of number of attempts to find balanced partial design (ignored if \code{balanced=FALSE}).}
 
 \item{addx}{an integer of either 1 or 2 indicating the type of additional crosses.}
 
@@ -77,7 +77,7 @@ For further information, please refer to the
 }
 \examples{
 \donttest{
-mpop <- magic.eval(n=8, m=1, reps=c(1,1,2), self=c(0,0,3), balanced=T)
+mpop <- magic.eval(n=8, m=1, reps=c(1,1,2), self=c(0,0,3), balanced=TRUE)
 }
 
 }

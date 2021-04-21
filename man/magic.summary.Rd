@@ -4,7 +4,7 @@
 \alias{magic.summary}
 \title{Tabulate the comparisons of different MAGIC designs.}
 \usage{
-magic.summary(input, complete = F, design.names = NULL)
+magic.summary(input, complete = FALSE, design.names = NULL)
 }
 \arguments{
 \item{input}{a list of outputs from \link{magic.eval}.}
@@ -22,8 +22,8 @@ It is similar to \link{magic.plot}, excepts the results are shown in tables inst
 }
 \examples{
 \donttest{
-mpop1 <- magic.eval(n=8, m=1, reps=c(1,1,4), self=c(0,0,3), balanced=T, n.sim=10)
-mpop2 <- magic.eval(n=8, m=7, reps=c(1,1,4), self=c(0,0,3), balanced=F, n.sim=10)
+mpop1 <- magic.eval(n=8, m=1, reps=c(1,1,4), self=c(0,0,3), balanced=TRUE, n.sim=10)
+mpop2 <- magic.eval(n=8, m=7, reps=c(1,1,4), self=c(0,0,3), balanced=FALSE, n.sim=10)
 mpop <- magic.summary(input=list(mpop1, mpop2))
 }
 

@@ -6,13 +6,13 @@
 \usage{
 magic.sim(
   xplan,
-  inbred = T,
+  inbred = TRUE,
   marker.dist = 0.01,
   chr.len = c(1, 2),
   n.sim = 1,
   hap.int = 0.05,
   n.hap = 1,
-  keep = F
+  keep = FALSE
 )
 }
 \arguments{
@@ -45,7 +45,7 @@ not kept. If the simulated marker data is really required, please set
 }
 \examples{
 \donttest{
-mpop <- magic.partial(n=8, m=1, balanced=T)
+mpop <- magic.partial(n=8, m=1, balanced=TRUE)
 mpop <- magic.sim(xplan=mpop$xplan)
 }
 

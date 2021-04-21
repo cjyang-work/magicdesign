@@ -4,7 +4,7 @@
 \alias{magic.full}
 \title{Create a full MAGIC design.}
 \usage{
-magic.full(n, inbred = T)
+magic.full(n, inbred = TRUE)
 }
 \arguments{
 \item{n}{number of founders (4, 8).}
