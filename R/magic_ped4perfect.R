@@ -11,11 +11,11 @@
 #'
 #' @noRd
 
-magic.ped4perfect <- function(ped, basic=F, show.partial=F, w2h.ratio=2){
+magic.ped4perfect <- function(ped, basic=FALSE, show.partial=FALSE, w2h.ratio=2){
 
   # assign column names to ped.
   colnames(ped) <- c("id","p1","p2","gen")
-  ped <- data.frame(ped, stringsAsFactors=F)
+  ped <- data.frame(ped, stringsAsFactors=FALSE)
   ped$gen <- as.numeric(ped$gen)
 
   # identify the number of founder (n), crossing generations (nx) and total generations (n.gen).
@@ -79,10 +79,10 @@ magic.ped4perfect <- function(ped, basic=F, show.partial=F, w2h.ratio=2){
   }
   
   # keep only unique RIL, remove any replicates from the final crossing generation to de-clutter the pedigree plot.
-  lineage <- lineage[sapply(1:nrow(lineage), FUN=function(x) any(ril.unique%in%lineage[x,])), , drop=F]
+  lineage <- lineage[sapply(1:nrow(lineage), FUN=function(x) any(ril.unique%in%lineage[x,])), , drop=FALSE]
   ped <- ped[sort(unique(c(lineage))), ]
   
-  # if basic=F, n=8 and show.partial=T, we will find one partial funnel set to plot
+  # if basic=FALSE, n=8 and show.partial=TRUE, we will find one partial funnel set to plot
   if(!basic & n == 8 & show.partial){
 
     # get the founder combinations in the final funnel.
@@ -93,7 +93,7 @@ magic.ped4perfect <- function(ped, basic=F, show.partial=F, w2h.ratio=2){
     # 2: founders meet at 4-way cross.
     # 3: founders meet at 8-way cross, and so on.
     m <- nrow(fmat)/(n-1)
-    comb <- combn(n,2)
+    comb <- utils::combn(n,2)
     grp <- sapply(1:nx, FUN=function(x) sort(rep(1:2^(nx-x),2^x)))
     mat <- matrix(nx+1, nrow=nrow(fmat), ncol=ncol(comb))
     for(i in 1:nrow(fmat)){
@@ -115,7 +115,7 @@ magic.ped4perfect <- function(ped, basic=F, show.partial=F, w2h.ratio=2){
     k0 <- 1
     while(length(fset) < n-1){
       fset <- c(fset, temp[[j]][k[j]])
-      if(any(sapply(1:nx, FUN=function(x) any(colSums(mat[fset,,drop=F]==x) > 2^(x-1))))){
+      if(any(sapply(1:nx, FUN=function(x) any(colSums(mat[fset,,drop=FALSE]==x) > 2^(x-1))))){
         fset <- fset[-length(fset)]
         if(j == 1){
           k0 <- k0 + 1
@@ -142,11 +142,11 @@ magic.ped4perfect <- function(ped, basic=F, show.partial=F, w2h.ratio=2){
     
     
     # keep only individuals that are found in a funnel set.
-    fset <- do.call(paste, c(data.frame(fmat[fset,], stringsAsFactors=F), sep=";"))
+    fset <- do.call(paste, c(data.frame(fmat[fset,], stringsAsFactors=FALSE), sep=";"))
     
     # identify and keep the RILs that make a funnel set.
     temp <- sapply(1:length(fset), FUN=function(x) max(ped$id3[ped$id1==fset[x]]))
-    lineage <- lineage[sapply(1:nrow(lineage), FUN=function(x) any(temp%in%lineage[x,])), , drop=F]
+    lineage <- lineage[sapply(1:nrow(lineage), FUN=function(x) any(temp%in%lineage[x,])), , drop=FALSE]
     ped <- ped[ped$id3 %in% sort(unique(c(lineage))), ]
     
   }
@@ -154,7 +154,7 @@ magic.ped4perfect <- function(ped, basic=F, show.partial=F, w2h.ratio=2){
   # reorder ped in each generation to keep siblings together and tidy up plot.
   temp <- stringr::str_split_fixed(ped$id1, ";", 2^length(x.gen))
   temp <- sapply(1:ncol(temp), FUN=function(x) stringr::str_pad(temp[,x], nchar(n), pad="0"))
-  temp <- do.call(paste,c(data.frame(temp, stringsAsFactors=F), sep=""))
+  temp <- do.call(paste,c(data.frame(temp, stringsAsFactors=FALSE), sep=""))
   ped <- ped[order(ped$gen, temp), ]
   
   # set the distance between individuals in each generation to 0.5 (or 0 if they are sibs).
@@ -186,13 +186,13 @@ magic.ped4perfect <- function(ped, basic=F, show.partial=F, w2h.ratio=2){
       pos <- rbind(pos, c(sum(ped.dist[[i]][1:j]) + 0.25*(2*j-1), max(ped.width)/max(ped$gen)*(length(ped.dist)-i+1)/w2h.ratio))
     }
   }
-  pos <- data.frame(pos, stringsAsFactors=F)
+  pos <- data.frame(pos, stringsAsFactors=FALSE)
   colnames(pos) <- c("x", "y")
 
   # here, we expand pos to cover each funnel separately.
-  pos <- data.frame(id3=ped$id3, gen=ped$gen, pos, stringsAsFactors=F)
+  pos <- data.frame(id3=ped$id3, gen=ped$gen, pos, stringsAsFactors=FALSE)
   
-  # add an extra index to distinguish among replicated funnels (can occur in some cases, e.g. basic=T).
+  # add an extra index to distinguish among replicated funnels (can occur in some cases, e.g. basic=TRUE).
   temp <- sapply(1:nrow(lineage), FUN=function(x) ped$id1[ped$id3 == lineage[x,ncol(lineage)]])
   temp2 <- unique(temp)
   for(i in 1:length(temp2)){
@@ -203,7 +203,7 @@ magic.ped4perfect <- function(ped, basic=F, show.partial=F, w2h.ratio=2){
   
   temp.pos <- vector()
   for(i in 1:nrow(lineage)){
-    temp.pos <- rbind(temp.pos, cbind(pos[pos$id3 %in% lineage[i,], , drop=F], funnel=temp[i]))
+    temp.pos <- rbind(temp.pos, cbind(pos[pos$id3 %in% lineage[i,], , drop=FALSE], funnel=temp[i]))
   }
   
   # calculate rship, where x1/y1 are the progeny x/y position, x2/y2 are the parent x/y position.
@@ -225,13 +225,13 @@ magic.ped4perfect <- function(ped, basic=F, show.partial=F, w2h.ratio=2){
                                            x2=pos$x[temp2],
                                            y2=pos$y[temp2],
                                            funnel=temp[i],
-                                           stringsAsFactors=F),
+                                           stringsAsFactors=FALSE),
                                 data.frame(x1=pos$x[temp1],
                                            y1=pos$y[temp1],
                                            x2=pos$x[temp3],
                                            y2=pos$y[temp3],
                                            funnel=temp[i],
-                                           stringsAsFactors=F)))
+                                           stringsAsFactors=FALSE)))
   }
   
   pos <- temp.pos
@@ -259,12 +259,12 @@ magic.ped4perfect <- function(ped, basic=F, show.partial=F, w2h.ratio=2){
     ggplot2::theme(axis.title=ggplot2::element_blank(), axis.text=ggplot2::element_blank(), axis.ticks=ggplot2::element_blank()) +
     ggplot2::coord_fixed(ratio=1)
   p <- plotly::ggplotly(p, tooltip="funnel")
-  p <- plotly::config(p, displaylogo=F, toImageButtonOptions=list(filename="pedigree", width=4200, height=floor(4200/w2h.ratio))) #width is equivalent to 7 in at 600dpi
+  p <- plotly::config(p, displaylogo=FALSE, toImageButtonOptions=list(filename="pedigree", width=4200, height=floor(4200/w2h.ratio))) #width is equivalent to 7 in at 600dpi
   p <- plotly::highlight(p, on="plotly_click", off="plotly_doubleclick", color="#FF5050")
 
   # save the output in html format.
-  #htmlwidgets::saveWidget(p, paste(filename, ".html", sep=""), selfcontained=T)
-  #if(grepl("/", filename, fixed=T)){
+  #htmlwidgets::saveWidget(p, paste(filename, ".html", sep=""), selfcontained=TRUE)
+  #if(grepl("/", filename, fixed=TRUE)){
   #  message(paste("pedigree plot has been saved to ", filename, ".html", sep=""))
   #}
   #else {
