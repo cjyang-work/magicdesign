@@ -17,8 +17,8 @@
 #'
 #' @examples
 #' \donttest{
-#' mpop1 <- magic.eval(n=8, m=1, reps=c(1,1,4), self=c(0,0,3), balanced=T, n.sim=10)
-#' mpop2 <- magic.eval(n=8, m=7, reps=c(1,1,4), self=c(0,0,3), balanced=F, n.sim=10)
+#' mpop1 <- magic.eval(n=8, m=1, reps=c(1,1,4), self=c(0,0,3), balanced=TRUE, n.sim=10)
+#' mpop2 <- magic.eval(n=8, m=7, reps=c(1,1,4), self=c(0,0,3), balanced=FALSE, n.sim=10)
 #' magic.plot(input=list(mpop1, mpop2), display="interval")
 #' }
 #'
@@ -28,7 +28,7 @@ magic.plot <- function(input,
                        display=c("interval", "whole"),
                        fpair=NULL,
                        chr.names=NULL,
-                       annotate=T,
+                       annotate=TRUE,
                        design.names=NULL){
   
   # get some information from the input
@@ -63,7 +63,7 @@ magic.plot <- function(input,
   if(display=="interval"){
     
     # plot1: proportions of all recombinant haplotypes.
-    dat1 <- lapply(1:n.design, FUN=function(x) data.frame(design=design.names[x], rec=colSums(input[[x]][[2]]), stringsAsFactors=F))
+    dat1 <- lapply(1:n.design, FUN=function(x) data.frame(design=design.names[x], rec=colSums(input[[x]][[2]]), stringsAsFactors=FALSE))
     dat1 <- do.call(rbind, dat1)
     dat1$design <- as.factor(dat1$design)
     plot1 <- ggplot2::ggplot() +
@@ -75,7 +75,7 @@ magic.plot <- function(input,
       ggplot2::labs(tag="A")
     
     # plot2: number of unique recombinant haplotypes.
-    dat2 <- lapply(1:n.design, FUN=function(x) data.frame(design=design.names[x], rec=colSums(!(input[[x]][[2]]==0)), stringsAsFactors=F))
+    dat2 <- lapply(1:n.design, FUN=function(x) data.frame(design=design.names[x], rec=colSums(!(input[[x]][[2]]==0)), stringsAsFactors=FALSE))
     dat2 <- do.call(rbind, dat2)
     dat2$design <- as.factor(dat2$design)
     plot2 <- ggplot2::ggplot() +
@@ -92,12 +92,12 @@ magic.plot <- function(input,
 
     dat3 <- vector()
       for(i in 1:n.design){
-      temp <- t(input[[i]][[2]][fpair, , drop=F])
+      temp <- t(input[[i]][[2]][fpair, , drop=FALSE])
       for(j in 1:ncol(temp)){
         dat3 <- rbind(dat3, c(i, j, summary(temp[,j])[c(1,4,6)]))
       }
     }
-    dat3 <- data.frame(dat3, stringsAsFactors=F)
+    dat3 <- data.frame(dat3, stringsAsFactors=FALSE)
     colnames(dat3) <- c("design", "rhap", "min", "mean", "max")
     dat3$design <- design.names[dat3$design]
     dat3$rhap <- fpair[dat3$rhap]
@@ -108,7 +108,7 @@ magic.plot <- function(input,
     #levels(dat3$rhap) <- fpair
 
     hues <- seq(15, 375, length=n.design+1)
-    hues <- hcl(h=hues, l=65, c=100)[1:n.design]
+    hues <- grDevices::hcl(h=hues, l=65, c=100)[1:n.design]
     
     plot3 <- ggplot2::ggplot() +
       ggplot2::geom_linerange(data=dat3, ggplot2::aes(x=rhap, ymin=min, ymax=max, group=design), color="#AAAAAA", position=ggplot2::position_dodge(width=0.8)) +
@@ -132,7 +132,7 @@ magic.plot <- function(input,
     plot3 <- plot3 + ggplot2::theme(legend.position="none")
     
     # combine plot1-3 and legend.
-    gridExtra::grid.arrange(plot1, plot2, legend, plot3, layout_matrix=matrix(c(1,1,2,2,3,4,4,4,4,4), nrow=2, byrow=T))
+    gridExtra::grid.arrange(plot1, plot2, legend, plot3, layout_matrix=matrix(c(1,1,2,2,3,4,4,4,4,4), nrow=2, byrow=TRUE))
 
   } else if(display=="whole"){
     
@@ -143,7 +143,7 @@ magic.plot <- function(input,
         dat4 <-  rbind(dat4, cbind(colSums(input[[i]][[3]][[j]])/nrow(input[[i]][[3]][[j]]), i, j))
       }
     }
-    dat4 <- data.frame(dat4, stringsAsFactors=F)
+    dat4 <- data.frame(dat4, stringsAsFactors=FALSE)
     colnames(dat4) <- c("proportion", "design", "founder")
     dat4$design <- design.names[dat4$design]
     dat4$design <- as.factor(dat4$design)
@@ -183,7 +183,7 @@ magic.plot <- function(input,
       }
     }
 
-    dat5 <- reshape2::melt(data.frame(dat5, stringsAsFactors=F), id.vars=c("i", "j"))
+    dat5 <- reshape2::melt(data.frame(dat5, stringsAsFactors=FALSE), id.vars=c("i", "j"))
     colnames(dat5) <- c("design", "chr", "founder", "prop.")
     levels(dat5$founder) <- gsub("V", "", levels(dat5$founder))
     dat5$design <- design.names[dat5$design]
@@ -228,9 +228,9 @@ magic.plot <- function(input,
       for(i in 1:n.design){
         for(j in 1:n.chr){
           temp <- dat6[dat6$design==design.names[i] & dat6$chr==j,]
-          dat6.loess <- loess(seg.mean~seg.len, data=temp)
+          dat6.loess <- stats::loess(seg.mean~seg.len, data=temp)
           dat6.anno <- rbind(dat6.anno, data.frame(x=1,
-                                                   y=predict(dat6.loess, 1),
+                                                   y=stats::predict(dat6.loess, 1),
                                                    design=design.names[i],
                                                    chr=j))
         }
@@ -255,7 +255,7 @@ magic.plot <- function(input,
     plot6 <- ggplot2::ggplot() +
       ggplot2::annotate("rect", xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf, fill=NA, color="#DDDDDD") +
       #ggplot2::geom_point(data=dat6, ggplot2::aes(x=seg.len, y=seg.mean, color=design), alpha=0.5, shape=16) +
-      ggplot2::geom_smooth(data=dat6, ggplot2::aes(x=seg.len, y=seg.mean, color=design), se=F, alpha=0.5) +
+      ggplot2::geom_smooth(data=dat6, ggplot2::aes(x=seg.len, y=seg.mean, color=design), se=FALSE, alpha=0.5) +
       ggplot2::facet_wrap(ggplot2::vars(chr), ncol=3, scales="free") +
       ggplot2::theme(panel.background=ggplot2::element_blank(), panel.grid=ggplot2::element_blank()) +
       ggplot2::scale_x_continuous(expand=c(0.02,0)) +
