@@ -32,8 +32,8 @@ magic.rearrange <- function(fmat){
   for(i in 1:nx){
     fmat <- matrix(fmat, nrow=2^i)
     temp <- fmat
-    z1 <- as.numeric(do.call(paste, c(data.frame(t(fmat[1:2^(i-1), , drop=F])), sep="")))
-    z2 <- as.numeric(do.call(paste, c(data.frame(t(fmat[(1+2^(i-1)):nrow(fmat), , drop=F])), sep="")))
+    z1 <- as.numeric(do.call(paste, c(data.frame(t(fmat[1:2^(i-1), , drop=FALSE])), sep="")))
+    z2 <- as.numeric(do.call(paste, c(data.frame(t(fmat[(1+2^(i-1)):nrow(fmat), , drop=FALSE])), sep="")))
     
     if(any(z2 < z1)){
       fmat[1:2^(i-1), z2 < z1] <- temp[(1+2^(i-1)):nrow(temp), z2 < z1]
