@@ -19,13 +19,13 @@
 #'
 #' @examples
 #' \donttest{
-#' mpop <- magic.partial(n=8, m=1, balanced=T)
+#' mpop <- magic.partial(n=8, m=1, balanced=TRUE)
 #' mpop <- magic.sim(xplan=mpop$xplan)
 #' }
 #'
 #' @export
 
-magic.sim <- function(xplan, inbred=T, marker.dist=0.01, chr.len=c(1,2), n.sim=1, hap.int=0.05, n.hap=1, keep=F){
+magic.sim <- function(xplan, inbred=TRUE, marker.dist=0.01, chr.len=c(1,2), n.sim=1, hap.int=0.05, n.hap=1, keep=FALSE){
 
   # get the number of generations.
   n.gen <- length(xplan)
@@ -45,7 +45,7 @@ magic.sim <- function(xplan, inbred=T, marker.dist=0.01, chr.len=c(1,2), n.sim=1
   n.marker <- sapply(1:(n.chr+1), FUN=function(x) length(gen.map[[x]])/(n-1))
   fhap <- lapply(1:(n.chr+1), FUN=function(x) matrix(rep(rbind(0, diag(n-1)), n.marker[x]), nrow=n, ncol=n.marker[x]*(n-1)))
   
-  # duplicate the founder haplotype if inbred=T.
+  # duplicate the founder haplotype if inbred=TRUE.
   if(inbred){
     for(i in 1:(n.chr+1)){
       rownames(fhap[[i]]) <- 1:nrow(fhap[[i]])
@@ -71,16 +71,16 @@ magic.sim <- function(xplan, inbred=T, marker.dist=0.01, chr.len=c(1,2), n.sim=1
   # out.lseg stores the mean non-recombinant segment length in each chromosome from each simulation.
   out.lseg <- replicate(n.chr, vector())
   
-  # out.hap collects all the haploid marker data from all simulations, if keep=T.
+  # out.hap collects all the haploid marker data from all simulations, if keep=TRUE.
   if(keep) out.hap <- vector()
   
   # simulate MAGIC population for n.sim-times.
   for(i in 1:n.sim){
     
-    # the inbred argument here is different, here we want inbred=F so it will always merge the two haplotypes together.
+    # the inbred argument here is different, here we want inbred=FALSE so it will always merge the two haplotypes together.
     founder <- AlphaSimR::newMapPop(genMap=gen.map,
                                     haplotypes=fhap,
-                                    inbred=F,
+                                    inbred=FALSE,
                                     ploidy=2L)
     SP <- AlphaSimR::SimParam$new(founder)
     sim <- AlphaSimR::newPop(founder, simParam=SP)
@@ -94,12 +94,12 @@ magic.sim <- function(xplan, inbred=T, marker.dist=0.01, chr.len=c(1,2), n.sim=1
 
     # extract the haploid marker data for the interval given by hap.int.
     hap.rec <- AlphaSimR::pullSegSiteHaplo(pop=sim, chr=n.chr+1, simParam=SP)
-    if(n.hap == 1) hap.rec <- hap.rec[seq(1,nrow(hap.rec),2),,drop=F]
+    if(n.hap == 1) hap.rec <- hap.rec[seq(1,nrow(hap.rec),2),,drop=FALSE]
     hap.rec <- magic.hap(hap=hap.rec, n=n)
     
     # extract the haploid marker data for all chromosomes.
     hap.all <- lapply(1:n.chr, FUN=function(x) AlphaSimR::pullSegSiteHaplo(pop=sim, chr=x, simParam=SP))
-    if(n.hap == 1) hap.all <- lapply(1:n.chr, FUN=function(x) hap.all[[x]][seq(1,nrow(hap.all[[x]]),2),,drop=F])
+    if(n.hap == 1) hap.all <- lapply(1:n.chr, FUN=function(x) hap.all[[x]][seq(1,nrow(hap.all[[x]]),2),,drop=FALSE])
     hap.all <- lapply(1:n.chr, FUN=function(x) magic.hap(hap=hap.all[[x]], n=n))
     
     # summarize the proportions of each recombinant haplotype.
@@ -159,7 +159,7 @@ magic.sim <- function(xplan, inbred=T, marker.dist=0.01, chr.len=c(1,2), n.sim=1
     }
     
     
-    # keep the marker data if keep=T.
+    # keep the marker data if keep=TRUE.
     if(keep){
       hap.keep <- hap.all
       for(j in 1:n.chr){
@@ -180,7 +180,7 @@ magic.sim <- function(xplan, inbred=T, marker.dist=0.01, chr.len=c(1,2), n.sim=1
   
   #if(keep){
   #  temp <- paste("sim_ril_fhap_", gsub(" ", "_", gsub("-", "", gsub(":", "", Sys.time()))), ".csv", sep="")
-  #  write.csv(out.hap, temp, quote=F, row.names=T)
+  #  write.csv(out.hap, temp, quote=FALSE, row.names=TRUE)
   #}
   
   if(keep){
