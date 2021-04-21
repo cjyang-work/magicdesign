@@ -1,28 +1,28 @@
 #' Create a partial MAGIC design.
 #'
 #' This function produces m (or m-set) founder combinations and crosses for
-#' 8 or more founders. For `balanced=T`, `n` is restricted to 8 or 16.
-#' For `balanced=F`, `n` is limited to 8, 16, 32, 64, 128.
+#' 8 or more founders. For `balanced=TRUE`, `n` is restricted to 8 or 16.
+#' For `balanced=FALSE`, `n` is limited to 8, 16, 32, 64, 128.
 #' Please refer to the section on partial MAGIC design in the
-#' [vignette](https://cjyang-sruc.github.io/magicdesign/vignette.html)
+#' [vignette](https://cjyang-sruc.github.io/files/magicdesign_vignette)
 #' for more information on the accepted `m` values for each `n`.
 #'
 #' @param n number of founders.
-#' @param m number of funnels (`balanced=F`) or funnel sets (`balanced=T`).
+#' @param m number of funnels (`balanced=FALSE`) or funnel sets (`balanced=TRUE`).
 #' @param balanced logical indicator of whether balanced partial design is chosen or ignored.
-#' @param n.try number of attempts to find balanced partial design (ignored if `balanced=F`).
+#' @param n.try number of attempts to find balanced partial design (ignored if `balanced=FALSE`).
 #' @param inbred logical indicator of whether the founders are inbred.
 #' @return an object of "cross.info" class, `i.e.` a list of
 #'         founder combinations (fcomb) and crossing plans (xplan).
 #'
 #' @examples
 #' \donttest{
-#' mpop <- magic.partial(n=8, m=1, balanced=T)
+#' mpop <- magic.partial(n=8, m=1, balanced=TRUE)
 #' }
 #'
 #' @export
 
-magic.partial <- function(n, m, balanced, n.try=1000, inbred=T){
+magic.partial <- function(n, m, balanced, n.try=1000, inbred=TRUE){
   
   # check if n is within allowed values.
   if(!(n %in% c(8,16,32,64,128))) stop("n has to be a power of 2 and cannot be smaller than 8. e.g. 8, 16, 32, 64, 128.")
@@ -41,10 +41,10 @@ magic.partial <- function(n, m, balanced, n.try=1000, inbred=T){
       stop("invalid m for the selected n.")
     }
 
-  # check if balanced is a logical indicator (T/F).
+  # check if balanced is a logical indicator (TRUE/FALSE).
   if(!is.logical(balanced)) stop("balanced has to be either TRUE (T) or FALSE (F)")
 
-  # check if n.try is a positive integer if balanced=T.
+  # check if n.try is a positive integer if balanced=TRUE.
   if(balanced & (n.try < 1 | !(n.try%%1==0))) stop("argument \"n.try\" has to be a positive integer.")
 
   # argument check: inbred.
@@ -85,8 +85,8 @@ magic.partial <- function(n, m, balanced, n.try=1000, inbred=T){
       for(i in 1:n.try){
 
         # random sampling of db8.
-        idx1 <- sample(1:45, 45, replace=F)
-        idx2 <- sample(1:16, 45, replace=T)
+        idx1 <- sample(1:45, 45, replace=FALSE)
+        idx2 <- sample(1:16, 45, replace=TRUE)
         
         # merge all randomly sampled subsets.
         temp <- sapply(1:45, FUN=function(x) db[[idx1[x]]][idx2[x],])
@@ -116,12 +116,12 @@ magic.partial <- function(n, m, balanced, n.try=1000, inbred=T){
     } else {
       
       # find partial design for 8 founders while ignoring balanced design.
-      idx <- sort(sample(1:nrow(fmat), m, replace=F))
+      idx <- sort(sample(1:nrow(fmat), m, replace=FALSE))
       
     }
     
     # extract the founder combinations for partial design.
-    fmat <- fmat[idx, , drop=F]
+    fmat <- fmat[idx, , drop=FALSE]
     
 
 
@@ -168,7 +168,7 @@ magic.partial <- function(n, m, balanced, n.try=1000, inbred=T){
       while(k < m){
         
         # randomly generate one funnel.
-        temp <- magic.rearrange(matrix(sample(1:n, n, replace=F), nrow=1))
+        temp <- magic.rearrange(matrix(sample(1:n, n, replace=FALSE), nrow=1))
         temp <- rbind(fmat, temp)
         
         # search for a new funnel if the funnel is not unique (limited to 100 tries).
