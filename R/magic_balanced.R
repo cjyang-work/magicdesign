@@ -6,17 +6,17 @@
 #' @param fmat a matrix of founder combinations.
 #' @param verbose a logical indicator of whether verbose output is desired.
 #' @return a logical indicator of whether the MAGIC design is balanced or not, and
-#'         also a table of all founder pairings if `verbose=T`.
+#'         also a table of all founder pairings if `verbose=TRUE`.
 #'
 #' @examples
 #' \donttest{
-#' mpop <- magic.partial(n=8, m=1, balanced=T)
+#' mpop <- magic.partial(n=8, m=1, balanced=TRUE)
 #' magic.balanced(mpop$fcomb[[3]])
 #' }
 #'
 #' @export
 
-magic.balanced <- function(fmat, verbose=F){
+magic.balanced <- function(fmat, verbose=FALSE){
 
   # get the number of founders and crossing generations.
   n0 <- ncol(fmat)
@@ -35,7 +35,7 @@ magic.balanced <- function(fmat, verbose=F){
   }
 
   # tabulate the number of founder pairs at each crossing generation.
-  fpair <- t(combn(n, 2))
+  fpair <- t(utils::combn(n, 2))
   fpair <- cbind(pair1=paste(fpair[,1], fpair[,2], sep="_"), pair2=paste(fpair[,2], fpair[,1], sep="_"))
   out <- vector()
   for(i in 1:nx){
