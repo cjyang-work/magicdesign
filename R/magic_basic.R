@@ -24,8 +24,8 @@ magic.basic <- function(n){
   nx <- log(n, 2)
   
   # create the founder combinations and crossing plans.
-  fcomb <- lapply(0:nx, FUN=function(x) matrix(1:n, ncol=2^x, byrow=T))
-  xplan <- lapply(1:nx, FUN=function(x) matrix(1:nrow(fcomb[[x]]), ncol=2, byrow=T))
+  fcomb <- lapply(0:nx, FUN=function(x) matrix(1:n, ncol=2^x, byrow=TRUE))
+  xplan <- lapply(1:nx, FUN=function(x) matrix(1:nrow(fcomb[[x]]), ncol=2, byrow=TRUE))
   fcomb <- fcomb[-1]
   
   # create output and set class as "cross.info".
