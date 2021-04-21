@@ -11,7 +11,7 @@
 #'
 #' @examples
 #' \donttest{
-#' mpop <- magic.partial(n=8, m=1, balanced=T)
+#' mpop <- magic.partial(n=8, m=1, balanced=TRUE)
 #' mpop <- magic.self(xinfo=mpop, self=c(0,0,3))
 #' }
 #'
@@ -20,7 +20,7 @@
 magic.self <- function(xinfo, self){
 
   # check if xinfo is an object of "cross.info" class.
-  if(!is(xinfo, "cross.info")) stop("xinfo has to be an object of \"cross.info\" class.")
+  if(!methods::is(xinfo, "cross.info")) stop("xinfo has to be an object of \"cross.info\" class.")
 
   # get the number of crossing generations.
   nx <- length(xinfo[[1]])
