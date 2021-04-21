@@ -8,7 +8,7 @@
 #'
 #' @examples
 #' \donttest{
-#' mpop <- magic.partial(n=8, m=1, balanced=T)
+#' mpop <- magic.partial(n=8, m=1, balanced=TRUE)
 #' mped <- magic.ped(xinfo=mpop)
 #' }
 #'
@@ -17,7 +17,7 @@
 magic.ped <- function(xinfo){
 
   # check if xinfo is an object of "cross.info" class.
-  if(!is(xinfo, "cross.info")) stop("xinfo has to be an object of \"cross.info\" class.")
+  if(!methods::is(xinfo, "cross.info")) stop("xinfo has to be an object of \"cross.info\" class.")
   
   # get the number of founders.
   n <- length(unique(c(xinfo[[1]][[1]])))
@@ -32,7 +32,7 @@ magic.ped <- function(xinfo){
   for(i in 1:n.gen){
     for(j in nrow(xplan[[i]]):1){
       if(sum(colSums(t(xplan[[i]])==xplan[[i]][j,])==2) > 1){
-        idx[[i]][j] <- sum(colSums(t(xplan[[i]][1:j, , drop=F])==xplan[[i]][j,])==2)
+        idx[[i]][j] <- sum(colSums(t(xplan[[i]][1:j, , drop=FALSE])==xplan[[i]][j,])==2)
       }
     }
   }
@@ -84,9 +84,9 @@ magic.ped <- function(xinfo){
   id1 <- id2 <- replicate(n.gen, vector())
   
   for(i in 1:n.gen){
-    p1[[i]] <- fcomb[[i]][xplan[[i]][,1],,drop=F]
+    p1[[i]] <- fcomb[[i]][xplan[[i]][,1],,drop=FALSE]
     id1[[i]] <- idx[[i]][xplan[[i]][,1]]
-    p2[[i]] <- fcomb[[i]][xplan[[i]][,2],,drop=F]
+    p2[[i]] <- fcomb[[i]][xplan[[i]][,2],,drop=FALSE]
     id2[[i]] <- idx[[i]][xplan[[i]][,2]]
   }
   
