@@ -195,9 +195,11 @@ magic.plot <- function(input,
       dat5$chr <- factor(dat5$chr, labels=c(paste("chr", chr.names, sep=" "), "all"))
     }
     
+    temp <- if(n <= 16) 3 else if(n > 16 & n <= 32) 2 else 1
+    
     plot5 <- ggplot2::ggplot() +
       ggplot2::geom_boxplot(data=dat5, ggplot2::aes(x=founder, y=prop., fill=design), alpha=0.5, lwd=0.2, outlier.alpha=0.3, outlier.size=1) +
-      ggplot2::facet_wrap(ggplot2::vars(chr), ncol=3, scales="free_y") +
+      ggplot2::facet_wrap(ggplot2::vars(chr), ncol=temp, scales="free_y") +
       ggplot2::theme(panel.background=ggplot2::element_blank(), panel.grid=ggplot2::element_blank()) +
       ggplot2::annotate("rect", xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf, fill=NA, color="#DDDDDD") +
       ggplot2::annotate("segment", x=seq(1.5, n, 1), xend=seq(1.5, n, 1), y=-Inf, yend=Inf, color="#EEEEEE") +
