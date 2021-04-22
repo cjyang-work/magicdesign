@@ -1,6 +1,6 @@
 Package: magicdesign
 Title: MAGIC population design and test
-Version: 1.1.3
+Version: 1.1.4
 Authors@R:
     c(person(given = "CJ",
              family = "Yang",
@@ -50,7 +50,9 @@ Imports:
     reshape2,
     ggrepel,
     plotly,
-    gridExtra
+    gridExtra,
+    shiny,
+    shinyjs
 Suggests:
     qtl2,
     htmlwidgets
