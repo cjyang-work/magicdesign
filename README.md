@@ -22,4 +22,7 @@ Please refer to the following sites for further information including user instr
 * [magicdesign](https://cjyang-sruc.github.io/magicdesign/)  
 * [magicdesignee](https://cjyang-sruc.github.io/magicdesignee/)  
 
-Thank you for checking out `magicdesign` and `magicdesignee`. Please [email me](mailto:cyang@sruc.ac.uk) if you have any issue or suggestion.  :
+Thank you for checking out `magicdesign` and `magicdesignee`. Please [email me](mailto:cyang@sruc.ac.uk) if you have any issue or suggestion.  
+
+## Acknowledgements
+Big thanks to [Karl Broman](https://kbroman.org/pkg_primer/), [Fong Chun Chan](https://tinyheero.github.io/jekyll/update/2015/07/26/making-your-first-R-package.html), [Dean Attali](https://deanattali.com/) and [R Markdown team](https://bookdown.org/yihui/rmarkdown/) for providing valuable resources in developing R package and Shiny app. Neither `magicdesign` nor `magicdesignee` would have been possible without these helpful guides. :thumbsup:  
