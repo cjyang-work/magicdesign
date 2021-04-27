@@ -619,7 +619,7 @@ server <- function(input, output, session) {
       if(n()==3){
         c(1:3)
       } else if(n()==4){
-        c(0,3)
+        c(0,0)
       } else if(n()==5){
         c(1,240)
       } else if(n()==6){
@@ -779,7 +779,7 @@ server <- function(input, output, session) {
       if(n()==3){
         c(1:3)
       } else if(n()==4){
-        c(0,3)
+        c(0,0)
       } else if(n()==5){
         c(1,240)
       } else if(n()==6){
@@ -939,7 +939,7 @@ server <- function(input, output, session) {
       if(n()==3){
         c(1:3)
       } else if(n()==4){
-        c(0,3)
+        c(0,0)
       } else if(n()==5){
         c(1,240)
       } else if(n()==6){
@@ -1099,7 +1099,7 @@ server <- function(input, output, session) {
       if(n()==3){
         c(1:3)
       } else if(n()==4){
-        c(0,3)
+        c(0,0)
       } else if(n()==5){
         c(1,240)
       } else if(n()==6){
@@ -1259,7 +1259,7 @@ server <- function(input, output, session) {
       if(n()==3){
         c(1:3)
       } else if(n()==4){
-        c(0,3)
+        c(0,0)
       } else if(n()==5){
         c(1,240)
       } else if(n()==6){
@@ -1419,7 +1419,7 @@ server <- function(input, output, session) {
       if(n()==3){
         c(1:3)
       } else if(n()==4){
-        c(0,3)
+        c(0,0)
       } else if(n()==5){
         c(1,240)
       } else if(n()==6){
