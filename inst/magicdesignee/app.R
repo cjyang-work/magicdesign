@@ -462,7 +462,7 @@ ui <- fluidPage(
                    "and begins with 0 in the founders."),
                  br(),
                  p("More details can be found in the",
-                   tags$a(href="https://cjyang-sruc.github.io/files/magicdesign_vignette", "vignette"),
+                   tags$a(href="https://cjyang-work.github.io/files/magicdesign_vignette", "vignette"),
                    "for the R package",
                    tags$code("magicdesign"), "."),
                  br(),
